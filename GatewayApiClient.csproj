@@ -124,7 +124,9 @@
     <Compile Include="GatewayServiceClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceClients\BaseResource.cs" />
+    <Compile Include="ResourceClients\CreditCardResource.cs" />
     <Compile Include="ResourceClients\Interfaces\IBaseResource.cs" />
+    <Compile Include="ResourceClients\Interfaces\ICreditCardResource.cs" />
     <Compile Include="ResourceClients\Interfaces\ISaleResource.cs" />
     <Compile Include="ResourceClients\SaleResource.cs" />
     <Compile Include="Utility\HttpVerbEnum.cs" />

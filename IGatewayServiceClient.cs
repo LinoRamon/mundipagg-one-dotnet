@@ -8,6 +8,11 @@ namespace GatewayApiClient {
     public interface IGatewayServiceClient {
 
         /// <summary>
+        /// Recurso de cartão de crédito
+        /// </summary>
+        ICreditCardResource CreditCard { get; }
+
+        /// <summary>
         /// Recurso de venda
         /// </summary>
         ISaleResource Sale { get; }

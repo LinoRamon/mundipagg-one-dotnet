@@ -18,6 +18,12 @@ namespace GatewayApiClient {
         /// </summary>
         public ISaleResource Sale { get { return _sale; } }
 
+        private ICreditCardResource _creditCard;
+        /// <summary>
+        /// Recurso de cartão de crédito
+        /// </summary>
+        public ICreditCardResource CreditCard { get { return _creditCard; } }
+
         #endregion
 
         public GatewayServiceClient() : this(Guid.Empty, PlatformEnvironment.Production) { }
@@ -31,6 +37,7 @@ namespace GatewayApiClient {
         public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType, Guid serviceKey, Uri hostUri) {
 
             this._sale = new SaleResource(merchantKey, environment, httpContentType, serviceKey, hostUri);
+            this._creditCard = new CreditCardResource(merchantKey, environment, httpContentType, serviceKey, hostUri);
         }
     }
 }
