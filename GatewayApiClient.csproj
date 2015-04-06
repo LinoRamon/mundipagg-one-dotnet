@@ -110,6 +110,7 @@
     <Compile Include="DataContracts\Sale\ManageSaleResponse.cs" />
     <Compile Include="DataContracts\Sale\QuerySaleResponse.cs" />
     <Compile Include="DataContracts\Sale\RequestData.cs" />
+    <Compile Include="DataContracts\Sale\RetrySaleOptions.cs" />
     <Compile Include="DataContracts\Sale\RetrySaleRequest.cs" />
     <Compile Include="DataContracts\Sale\RetrySaleResponse.cs" />
     <Compile Include="DataContracts\Sale\SaleData.cs" />

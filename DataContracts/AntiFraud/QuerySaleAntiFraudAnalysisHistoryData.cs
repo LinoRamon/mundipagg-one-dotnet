@@ -19,7 +19,7 @@ namespace GatewayApiClient.DataContracts {
         private string AntiFraudAnalysisStatusField {
             get {
                 if (this.AntiFraudAnalysisStatus == null) { return null; }
-                return this.AntiFraudAnalysisStatus.ToString();
+                return this.AntiFraudAnalysisStatus.Value.ToString(ServiceConstants.DATE_TIME_FORMAT);
             }
             set {
                 if (value == null) {
@@ -61,5 +61,25 @@ namespace GatewayApiClient.DataContracts {
         /// </summary>
         [DataMember]
         public Nullable<decimal> Score { get; set; }
+
+        #region StatusChangedDate
+
+        /// <summary>
+        /// Data da alteração de status
+        /// </summary>
+        [DataMember(Name = "StatusChangedDate")]
+        private string StatusChangedDateField {
+            get {
+                return this.StatusChangedDate.ToString(ServiceConstants.DATE_TIME_FORMAT);
+            }
+            set {
+                this.StatusChangedDate = DateTime.ParseExact(value, ServiceConstants.DATE_TIME_FORMAT, null);
+            }
+        }
+
+        [IgnoreDataMember]
+        public DateTime StatusChangedDate { get; set; }
+
+        #endregion
     }
 }

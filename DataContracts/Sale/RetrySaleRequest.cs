@@ -17,6 +17,12 @@ namespace GatewayApiClient.DataContracts {
         public Guid OrderKey { get; set; }
 
         /// <summary>
+        /// Opções da transação.
+        /// </summary>
+        [DataMember]
+        public RetrySaleOptions Options { get; set; }
+
+        /// <summary>
         /// Lista de trasanções de cartão de crédito a serem retentadas
         /// </summary>
         [DataMember]

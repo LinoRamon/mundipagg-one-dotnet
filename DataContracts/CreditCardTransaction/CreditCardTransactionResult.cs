@@ -129,7 +129,7 @@ namespace GatewayApiClient.DataContracts {
         private string DueDateField {
             get {
                 if (this.DueDate == null) { return null; }
-                return this.DueDate.ToString();
+                return this.DueDate.Value.ToString(ServiceConstants.DATE_TIME_FORMAT);
             }
             set {
                 if (value == null) {
