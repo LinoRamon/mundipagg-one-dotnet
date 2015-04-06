@@ -28,16 +28,15 @@ namespace GatewayApiClient {
 
         public GatewayServiceClient() : this(Guid.Empty, PlatformEnvironment.Production) { }
 
-        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment) : this(merchantKey, environment, HttpContentTypeEnum.Json, Guid.Empty, null) { }
+        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment) : this(merchantKey, environment, HttpContentTypeEnum.Json, null) { }
 
-        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType) : this(merchantKey, environment, httpContentType, Guid.Empty, null) { }
+        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType) : this(merchantKey, environment, httpContentType, null) { }
 
-        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType, Guid serviceKey) : this(merchantKey, environment, httpContentType, serviceKey, null) { }
 
-        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType, Guid serviceKey, Uri hostUri) {
+        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType, Uri hostUri) {
 
-            this._sale = new SaleResource(merchantKey, environment, httpContentType, serviceKey, hostUri);
-            this._creditCard = new CreditCardResource(merchantKey, environment, httpContentType, serviceKey, hostUri);
+            this._sale = new SaleResource(merchantKey, environment, httpContentType, hostUri);
+            this._creditCard = new CreditCardResource(merchantKey, environment, httpContentType, hostUri);
         }
     }
 }

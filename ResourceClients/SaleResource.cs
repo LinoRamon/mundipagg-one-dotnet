@@ -11,8 +11,7 @@ namespace GatewayApiClient.ResourceClients {
     public class SaleResource : BaseResource, ISaleResource {
 
         public SaleResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType) : base(merchantKey, platformEnvironment, httpContentType , "/Sale") { }
-        public SaleResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, Guid serviceKey) : base(merchantKey, platformEnvironment, httpContentType, "/Sale", serviceKey) { }
-        public SaleResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, Guid serviceKey, Uri hostUri) : base(merchantKey, platformEnvironment, httpContentType, "/Sale", serviceKey, hostUri) { }
+        public SaleResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, Uri hostUri) : base(merchantKey, platformEnvironment, httpContentType, "/Sale", hostUri) { }
 
         #region Create
 
@@ -26,7 +25,6 @@ namespace GatewayApiClient.ResourceClients {
             // Configura MerchantKey e o header
             NameValueCollection header = new NameValueCollection();
             header.Add("MerchantKey", this.MerchantKey.ToString());
-            if (this.ServiceKey != Guid.Empty) { header.Add("ServiceKey", this.ServiceKey.ToString()); }
             
             // Envia requisição
             return this.HttpUtility.SubmitRequest<CreateSaleRequest, CreateSaleResponse>(createSaleRequest,
@@ -107,7 +105,6 @@ namespace GatewayApiClient.ResourceClients {
             // Configura MerchantKey e o header
             NameValueCollection header = new NameValueCollection();
             header.Add("MerchantKey", this.MerchantKey.ToString());
-            if (this.ServiceKey != Guid.Empty) { header.Add("ServiceKey", this.ServiceKey.ToString()); }
 
             // Envia requisição
             return this.HttpUtility.SubmitRequest<ManageSaleRequest, ManageSaleResponse>(manageSaleRequest,
@@ -169,7 +166,6 @@ namespace GatewayApiClient.ResourceClients {
             // Configura MerchantKey e o header
             NameValueCollection header = new NameValueCollection();
             header.Add("MerchantKey", this.MerchantKey.ToString());
-            if (this.ServiceKey != Guid.Empty) { header.Add("ServiceKey", this.ServiceKey.ToString()); }
 
             // Envia requisição
             return this.HttpUtility.SubmitRequest<RetrySaleRequest, RetrySaleResponse>(retrySaleRequest,
@@ -273,7 +269,6 @@ namespace GatewayApiClient.ResourceClients {
 
             NameValueCollection header = new NameValueCollection();
             header.Add("MerchantKey", this.MerchantKey.ToString());
-            if (this.ServiceKey != Guid.Empty) { header.Add("ServiceKey", this.ServiceKey.ToString()); }
 
             return this.HttpUtility.SubmitRequest<QuerySaleResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, this.HttpContentType, header);
         }

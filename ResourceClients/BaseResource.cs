@@ -20,18 +20,12 @@ namespace GatewayApiClient.ResourceClients {
         private string _hostUri;
         protected string HostUri { get { return _hostUri; } }
 
-        private Guid _serviceKey;
-        protected Guid ServiceKey { get { return this._serviceKey; } }
-
         internal HttpUtility HttpUtility { get; set; }
 
         protected BaseResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, string resourceName)
-            : this(merchantKey, platformEnvironment, httpContentType, resourceName, Guid.Empty, null) { }
+            : this(merchantKey, platformEnvironment, httpContentType, resourceName, null) { }
 
-        protected BaseResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, string resourceName, Guid serviceKey)
-            : this(merchantKey, platformEnvironment, httpContentType, resourceName, serviceKey, null) { }
-
-        protected BaseResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, string resourceName, Guid serviceKey, Uri hostUri) {
+        protected BaseResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, string resourceName, Uri hostUri) {
 
             if (merchantKey == Guid.Empty) {
                 merchantKey = this.GetConfigurationKey("GatewayService.MerchantKey");
@@ -43,7 +37,6 @@ namespace GatewayApiClient.ResourceClients {
             this.MerchantKey = merchantKey;
             this.PlatformEnvironment = platformEnvironment;
             this.HttpContentType = httpContentType;
-            this._serviceKey = serviceKey;
             if (hostUri != null) {
                 this._hostUri = hostUri.ToString();
                 this._hostUri = this._hostUri.Remove(this._hostUri.Length - 1);
