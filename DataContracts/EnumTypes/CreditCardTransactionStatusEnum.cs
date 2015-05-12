@@ -147,6 +147,12 @@ namespace GatewayApiClient.DataContracts.EnumTypes {
         NotFoundInAcquirer = 23,
 
         /// <summary>
+        /// Pendente de autorização
+        /// </summary>
+        [EnumMember]
+        PendingAuthorize = 24,
+
+        /// <summary>
         /// Com erro
         /// </summary>
         [EnumMember]
