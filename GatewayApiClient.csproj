@@ -135,7 +135,7 @@
     <Compile Include="Utility\HttpUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GatewayApiClient.csproj.nuspec" />
+    <None Include="GatewayApiClient.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
