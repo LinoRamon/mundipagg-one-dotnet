@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MPGatewayClient</id>
+    <version>1.0.0</version>
+    <authors>MundiPagg</authors>
+    <owners>MundiPagg</owners>
+    <projectUrl>https://github.com/mundipagg/mundipagg-one-dotnet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MundiPagg Client Sdk</description>
+    <releaseNotes></releaseNotes>
+    <copyright>MundiPagg 2015</copyright>
+    <tags>MundiPagg Credit Card Payment Boleto Gateway Transaction</tags>
+  </metadata>
+</package>
