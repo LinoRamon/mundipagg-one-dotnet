@@ -48,14 +48,20 @@ namespace GatewayApiClient.DataContracts {
         [DataMember(Name = "CreditCardOperation")]
         private string CreditCardOperationField {
             get {
+                if (this.CreditCardOperation == null) { return null; }
                 return this.CreditCardOperation.ToString();
             }
             set {
-                this.CreditCardOperation = (CreditCardOperationEnum)Enum.Parse(typeof(CreditCardOperationEnum), value);
+                if (value == null) {
+                    this.CreditCardOperationField = null;
+                }
+                else {
+                    this.CreditCardOperation = (CreditCardOperationEnum)Enum.Parse(typeof(CreditCardOperationEnum), value);
+                }
             }
         }
 
-        public CreditCardOperationEnum CreditCardOperation { get; set; }
+        public Nullable<CreditCardOperationEnum> CreditCardOperation { get; set; }
 
         #endregion
 
