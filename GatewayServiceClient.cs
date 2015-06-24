@@ -26,12 +26,15 @@ namespace GatewayApiClient {
 
         #endregion
 
+        public GatewayServiceClient(Guid merchantKey) : this(merchantKey, PlatformEnvironment.Production, HttpContentTypeEnum.Json, null) { }
+
+        public GatewayServiceClient(Guid merchantKey, Uri hostUri) : this(merchantKey, PlatformEnvironment.Production, HttpContentTypeEnum.Json, hostUri) { }
+
         public GatewayServiceClient() : this(Guid.Empty, PlatformEnvironment.Production) { }
 
         public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment) : this(merchantKey, environment, HttpContentTypeEnum.Json, null) { }
 
         public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType) : this(merchantKey, environment, httpContentType, null) { }
-
 
         public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType, Uri hostUri) {
 
