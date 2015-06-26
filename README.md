@@ -3,6 +3,8 @@ MundiPaggV2 .NET Integration library.
 
 .NET library for integration with MundiPagg payment web services.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/m4ufxyvf5uwrw33y?svg=true)](https://ci.appveyor.com/project/MundiPagg/mundipagg-one-dotnet)
+
 ## NuGet
   PM> Install-Package MundiPagg.Gateway.Client
 
