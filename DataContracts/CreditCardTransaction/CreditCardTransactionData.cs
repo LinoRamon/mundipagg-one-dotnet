@@ -108,7 +108,7 @@ namespace GatewayApiClient.DataContracts {
                     this.DueDate = null;
                 }
                 else {
-                    this.DueDate = DateTime.ParseExact(value, ServiceConstants.DATE_FORMAT, null);
+                    this.DueDate = DateTime.ParseExact(value, ServiceConstants.DATE_TIME_FORMAT, null);
                 }
             }
         }
