@@ -182,7 +182,7 @@ namespace GatewayApiClient.DataContracts {
         /// Chave da transação na adquirente, enviada pelo gateway
         /// </summary>
         [DataMember]
-        public string TransactioKeyToAcquirer { get; set; }
+        public string TransactionKeyToAcquirer { get; set; }
 
         #region CaptureExpirationDate
 
