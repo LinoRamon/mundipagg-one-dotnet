@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>MundiPagg.Gateway.Client</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <authors>MundiPagg</authors>
     <owners>MundiPagg</owners>
     <projectUrl>https://github.com/mundipagg/mundipagg-one-dotnet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MundiPagg Gateway Client</description>
-    <releaseNotes>Renaming TransactioKeyToAcquirer field to TransactionKeyToAcquirer.</releaseNotes>
+    <releaseNotes>Renaming RetryOrderCreditCardTransacionResponse field to CreditCardTransactionResultCollection.</releaseNotes>
     <copyright>MundiPagg 2015</copyright>
     <tags>MundiPagg Credit Card Payment Boleto Gateway Transaction</tags>
   </metadata>
