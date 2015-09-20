@@ -13,6 +13,6 @@ namespace GatewayApiClient.DataContracts {
         /// Lista de transações de cartão de crédito
         /// </summary>
         [DataMember]
-        public Collection<CreditCardTransactionResult> RetryOrderCreditCardTransacionResponse { get; set; }
+        public Collection<CreditCardTransactionResult> CreditCardTransactionResultCollection { get; set; }
     }
 }

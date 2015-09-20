@@ -108,7 +108,7 @@ namespace GatewayApiClient.DataContracts {
                     this.DueDate = null;
                 }
                 else {
-                    this.DueDate = DateTime.ParseExact(value, "ServiceConstants.DATE_FORMAT", null);
+                    this.DueDate = DateTime.ParseExact(value, ServiceConstants.DATE_TIME_FORMAT, null);
                 }
             }
         }
@@ -182,7 +182,7 @@ namespace GatewayApiClient.DataContracts {
         /// Chave da transação na adquirente, enviada pelo gateway
         /// </summary>
         [DataMember]
-        public string TransactioKeyToAcquirer { get; set; }
+        public string TransactionKeyToAcquirer { get; set; }
 
         #region CaptureExpirationDate
 

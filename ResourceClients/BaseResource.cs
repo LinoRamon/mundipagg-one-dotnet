@@ -61,7 +61,7 @@ namespace GatewayApiClient.ResourceClients {
 
         private string GetConfigurationString(string configurationName) {
 
-            string configurationValue = ConfigurationManager.AppSettings["configurationName"];
+            string configurationValue = ConfigurationManager.AppSettings[configurationName];
             if (string.IsNullOrWhiteSpace(configurationValue)) { throw new ConfigurationErrorsException("Missing configuration: " + configurationName); }
 
             return configurationValue;
