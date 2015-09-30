@@ -123,6 +123,33 @@
     <Compile Include="EnumTypes\PlatformEnvironment.cs" />
     <Compile Include="IGatewayServiceClient.cs" />
     <Compile Include="GatewayServiceClient.cs" />
+    <Compile Include="Notification\Contracts\BoletoTransaction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\Contracts\CreditCardTransaction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\Contracts\Enum\BoletoTransactionStatusEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\Contracts\Enum\CreditCardTransactionStatusEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\Contracts\Enum\OnlineDebitTransactionStatusEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\Contracts\Enum\OrderStatusEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\Contracts\OnlineDebitTransaction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\Contracts\StatusNotification.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notification\NotificationParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceClients\BaseResource.cs" />
     <Compile Include="ResourceClients\CreditCardResource.cs" />
