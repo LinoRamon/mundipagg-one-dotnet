@@ -69,12 +69,6 @@ namespace GatewayApiClient.DataContracts.EnumTypes {
         Deposited = 10,
 
         /// <summary>
-        /// Aberto e pendente de autorização
-        /// </summary>
-        [EnumMember]
-        OpenedPendingAuth = 11,
-
-        /// <summary>
         /// Chargeback
         /// </summary>
         [EnumMember]
