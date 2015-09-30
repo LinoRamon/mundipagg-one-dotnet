@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using GatewayApiClient.EnumTypes;
 using GatewayApiClient.ResourceClients.Interfaces;
 using GatewayApiClient.Utility;
@@ -28,7 +27,7 @@ namespace GatewayApiClient.ResourceClients {
         protected BaseResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, string resourceName, Uri hostUri) {
 
             if (merchantKey == Guid.Empty) {
-                merchantKey = this.GetConfigurationKey("GatewayService.MerchantKey");
+                merchantKey = ConfigurationUtility.GetConfigurationKey("MerchantKey");
             }
 
             this.HttpUtility = new HttpUtility();
@@ -51,29 +50,12 @@ namespace GatewayApiClient.ResourceClients {
 
             switch (platformEnvironment) {
                 case PlatformEnvironment.Production:
-                    return this.GetConfigurationString("GatewayService.ProductionHostUri");
+                    return ConfigurationUtility.GetConfigurationString("ProductionHostUri");
                 case PlatformEnvironment.Sandbox:
-                    return this.GetConfigurationString("GatewayService.SandboxHostUri");
+                    return ConfigurationUtility.GetConfigurationString("SandboxHostUri");
                 default:
                     return null;
             }
-        }
-
-        private string GetConfigurationString(string configurationName) {
-
-            string configurationValue = ConfigurationManager.AppSettings[configurationName];
-            if (string.IsNullOrWhiteSpace(configurationValue)) { throw new ConfigurationErrorsException("Missing configuration: " + configurationName); }
-
-            return configurationValue;
-        }
-        private Guid GetConfigurationKey(string configurationName) {
-
-            string configurationValue = this.GetConfigurationString(configurationName);
-
-            Guid key;
-            if (Guid.TryParse(configurationValue, out key) == false) { throw new ConfigurationErrorsException("Invalid configuration format: " + configurationName); }
-
-            return key;
         }
     }
 }

@@ -130,6 +130,7 @@
     <Compile Include="ResourceClients\Interfaces\ICreditCardResource.cs" />
     <Compile Include="ResourceClients\Interfaces\ISaleResource.cs" />
     <Compile Include="ResourceClients\SaleResource.cs" />
+    <Compile Include="Utility\ConfigurationUtility.cs" />
     <Compile Include="Utility\HttpVerbEnum.cs" />
     <Compile Include="Utility\HttpResponse.cs" />
     <Compile Include="Utility\HttpUtility.cs" />
@@ -137,6 +138,7 @@
   <ItemGroup>
     <None Include="GatewayApiClient.nuspec" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
