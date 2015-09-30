@@ -130,6 +130,18 @@
     <Compile Include="ResourceClients\Interfaces\ICreditCardResource.cs" />
     <Compile Include="ResourceClients\Interfaces\ISaleResource.cs" />
     <Compile Include="ResourceClients\SaleResource.cs" />
+    <Compile Include="Serialization\ISerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\JsonSerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\SerializerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serialization\XmlSerializer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utility\ConfigurationUtility.cs" />
     <Compile Include="Utility\HttpVerbEnum.cs" />
     <Compile Include="Utility\HttpResponse.cs" />
