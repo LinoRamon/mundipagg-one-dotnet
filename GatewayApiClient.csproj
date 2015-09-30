@@ -142,6 +142,66 @@
     <Compile Include="Serialization\XmlSerializer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TransactionReportFile\Constants.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Factory\ParserFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\ITransactionReportClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\ITransactionReportParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Parsers\BoletoTransactionParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Parsers\CreditCardTransactionParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Parsers\HeaderParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Parsers\IReportItemParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Parsers\OnlineDebitTransactionParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Parsers\TrailerParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Report\BoletoTransaction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Report\CreditCardTransaction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Report\Header.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Report\IReportItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Report\OnlineDebitTransaction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Report\Order.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Report\Trailer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\Report\TransactionReport.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\TransactionReportClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionReportFile\TransactionReportParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utility\ConfigurationUtility.cs" />
     <Compile Include="Utility\HttpVerbEnum.cs" />
     <Compile Include="Utility\HttpResponse.cs" />
