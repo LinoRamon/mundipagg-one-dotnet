@@ -61,6 +61,7 @@ namespace GatewayApiClient.DataContracts {
             }
         }
 
+        [IgnoreDataMember]
         public Nullable<CreditCardOperationEnum> CreditCardOperation { get; set; }
 
         #endregion

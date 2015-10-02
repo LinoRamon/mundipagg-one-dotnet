@@ -1,7 +1,12 @@
 ﻿using System;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 using GatewayApiClient.Notification;
 using GatewayApiClient.Notification.Contracts;
 using GatewayApiClient.Notification.Contracts.Enum;
+using GatewayApiClient.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GatewayApiClient.Tests.Notification {
@@ -77,7 +82,7 @@ namespace GatewayApiClient.Tests.Notification {
     <CapturedAmountInCents>500</CapturedAmountInCents>
     <CreditCardBrand>Mastercard</CreditCardBrand>
     <CustomStatus />
-    <RefundedAmountInCents />
+    
     <StatusChangedDate>2015-09-22T15:51:41.217</StatusChangedDate>
     <TransactionIdentifier>9876543210</TransactionIdentifier>
     <TransactionKey>4111D523-9A83-4BE3-94D2-160F1BC9C4BD</TransactionKey>
@@ -180,7 +185,6 @@ namespace GatewayApiClient.Tests.Notification {
             Assert.AreEqual(500, statusNotification.AmountInCents);
             Assert.AreEqual(500, statusNotification.AmountPaidInCents);
             Assert.IsNotNull(statusNotification.CreditCardTransaction);
-            Assert.IsNull(statusNotification.BoletoTransaction);
             Assert.IsNull(statusNotification.OnlineDebitTransaction);
             Assert.AreEqual(Guid.Parse("B1B1092C-8681-40C2-A734-500F22683D9B"), statusNotification.MerchantKey);
             Assert.AreEqual(Guid.Parse("18471F05-9F6D-4497-9C24-D60D5BBB6BBE"), statusNotification.OrderKey);
@@ -190,21 +194,21 @@ namespace GatewayApiClient.Tests.Notification {
             // CreditCardTransaction
             CreditCardTransaction creditCardTransaction = statusNotification.CreditCardTransaction;
             Assert.AreEqual("Simulator", creditCardTransaction.Acquirer);
-            //Assert.AreEqual(500, creditCardTransaction.AmountInCents);
-            //Assert.AreEqual("123456", creditCardTransaction.AuthorizationCode);
-            //Assert.AreEqual(500, creditCardTransaction.AuthorizedAmountInCents);
-            //Assert.AreEqual(500, creditCardTransaction.CapturedAmountInCents);
-            //Assert.AreEqual("Mastercard", creditCardTransaction.CreditCardBrand);
-            //Assert.IsNull(creditCardTransaction.CustomStatus);
-            //Assert.IsNull(creditCardTransaction.RefundedAmountInCents);
-            //Assert.AreEqual(this.ParseDateTime("2015-09-22T15:51:41.217"), creditCardTransaction.StatusChangedDate);
-            //Assert.AreEqual("9876543210", creditCardTransaction.TransactionIdentifier);
-            //Assert.AreEqual(Guid.Parse("4111D523-9A83-4BE3-94D2-160F1BC9C4BD"), creditCardTransaction.TransactionKey);
-            //Assert.AreEqual("91735820", creditCardTransaction.TransactionReference);
-            //Assert.AreEqual("63417982", creditCardTransaction.UniqueSequentialNumber);
-            //Assert.IsNull(creditCardTransaction.VoidedAmountInCents);
-            //Assert.AreEqual("AuthorizedPendingCapture", creditCardTransaction.PreviousCreditCardTransactionStatus);
-            //Assert.AreEqual("Captured", creditCardTransaction.CreditCardTransactionStatus);
+            Assert.AreEqual(500, creditCardTransaction.AmountInCents);
+            Assert.AreEqual("123456", creditCardTransaction.AuthorizationCode);
+            Assert.AreEqual(500, creditCardTransaction.AuthorizedAmountInCents);
+            Assert.AreEqual(500, creditCardTransaction.CapturedAmountInCents);
+            Assert.AreEqual("Mastercard", creditCardTransaction.CreditCardBrand);
+            Assert.IsTrue(string.IsNullOrEmpty(creditCardTransaction.CustomStatus));
+            Assert.IsNull(creditCardTransaction.RefundedAmountInCents);
+            Assert.AreEqual(this.ParseDateTime("2015-09-22T15:51:41.217"), creditCardTransaction.StatusChangedDate);
+            Assert.AreEqual("9876543210", creditCardTransaction.TransactionIdentifier);
+            Assert.AreEqual(Guid.Parse("4111D523-9A83-4BE3-94D2-160F1BC9C4BD"), creditCardTransaction.TransactionKey);
+            Assert.AreEqual("91735820", creditCardTransaction.TransactionReference);
+            Assert.AreEqual("63417982", creditCardTransaction.UniqueSequentialNumber);
+            Assert.IsNull(creditCardTransaction.VoidedAmountInCents);
+            Assert.AreEqual("AuthorizedPendingCapture", creditCardTransaction.PreviousCreditCardTransactionStatus);
+            Assert.AreEqual("Captured", creditCardTransaction.CreditCardTransactionStatus);
         }
 
         private DateTime ParseDateTime(string dateTime) {
