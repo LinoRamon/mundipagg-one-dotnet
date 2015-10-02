@@ -37,14 +37,14 @@ namespace GatewayApiClient.Tests.Notification {
     <AuthorizedAmountInCents>500</AuthorizedAmountInCents>
     <CapturedAmountInCents>500</CapturedAmountInCents>
     <CreditCardBrand>Mastercard</CreditCardBrand>
-    <CustomStatus />
-    <RefundedAmountInCents />
+    <CustomStatus>String Content</CustomStatus>
+    <RefundedAmountInCents>100</RefundedAmountInCents>
     <StatusChangedDate>2015-09-22T15:51:41.217</StatusChangedDate>
     <TransactionIdentifier>9876543210</TransactionIdentifier>
     <TransactionKey>4111D523-9A83-4BE3-94D2-160F1BC9C4BD</TransactionKey>
     <TransactionReference>91735820</TransactionReference>
     <UniqueSequentialNumber>63417982</UniqueSequentialNumber>
-    <VoidedAmountInCents />
+    <VoidedAmountInCents>100</VoidedAmountInCents>
     <PreviousCreditCardTransactionStatus>AuthorizedPendingCapture</PreviousCreditCardTransactionStatus>
     <CreditCardTransactionStatus>Captured</CreditCardTransactionStatus>
   </CreditCardTransaction>
@@ -207,8 +207,121 @@ namespace GatewayApiClient.Tests.Notification {
             Assert.AreEqual("91735820", creditCardTransaction.TransactionReference);
             Assert.AreEqual("63417982", creditCardTransaction.UniqueSequentialNumber);
             Assert.IsNull(creditCardTransaction.VoidedAmountInCents);
-            Assert.AreEqual("AuthorizedPendingCapture", creditCardTransaction.PreviousCreditCardTransactionStatus);
-            Assert.AreEqual("Captured", creditCardTransaction.CreditCardTransactionStatus);
+            Assert.AreEqual(CreditCardTransactionStatusEnum.AuthorizedPendingCapture, creditCardTransaction.PreviousCreditCardTransactionStatus);
+            Assert.AreEqual(CreditCardTransactionStatusEnum.Captured, creditCardTransaction.CreditCardTransactionStatus);
+        }
+
+        [TestMethod]
+        public void ParseNotification_Boleto_Test() {
+            NotificationParser notificationParser = new NotificationParser();
+
+            var statusNotification = notificationParser.ParseNotification(boletoNotification);
+
+            Assert.AreEqual(1000, statusNotification.AmountInCents);
+            Assert.AreEqual(1000, statusNotification.AmountPaidInCents);
+            Assert.IsNotNull(statusNotification.BoletoTransaction);
+            Assert.IsNull(statusNotification.OnlineDebitTransaction);
+            Assert.AreEqual(Guid.Parse("B1B1092C-8681-40C2-A734-500F22683D9B"), statusNotification.MerchantKey);
+            Assert.AreEqual(Guid.Parse("60365605-1D43-487D-AE4C-8B7DC5BAA213"), statusNotification.OrderKey);
+            Assert.AreEqual("9657412", statusNotification.OrderReference);
+            Assert.AreEqual(OrderStatusEnum.Paid, statusNotification.OrderStatus);
+
+            // BoletoTransaction
+            Assert.AreEqual(1000, statusNotification.BoletoTransaction.AmountInCents);
+            Assert.AreEqual(1000, statusNotification.BoletoTransaction.AmountPaidInCents);
+            Assert.AreEqual(ParseDateTime("2015-09-21T15:42:04.573"), statusNotification.BoletoTransaction.BoletoExpirationDate);
+            Assert.AreEqual("0123456789", statusNotification.BoletoTransaction.NossoNumero);
+            Assert.AreEqual(ParseDateTime("2015-09-22T07:06:00.537"), statusNotification.BoletoTransaction.StatusChangedDate);
+            Assert.AreEqual(Guid.Parse("F7C4B737-E8B5-4BAA-BB47-6ED2A1A1EE09"), statusNotification.BoletoTransaction.TransactionKey);
+            Assert.AreEqual("6741137", statusNotification.BoletoTransaction.TransactionReference);
+            Assert.AreEqual(BoletoTransactionStatusEnum.Generated, statusNotification.BoletoTransaction.PreviousBoletoTransactionStatus);
+            Assert.AreEqual(BoletoTransactionStatusEnum.Paid, statusNotification.BoletoTransaction.BoletoTransactionStatus);
+        }
+
+        [TestMethod]
+        public void ParseNotification_OnlineDebit_Test() {
+            NotificationParser notificationParser = new NotificationParser();
+
+            var statusNotification = notificationParser.ParseNotification(onlineDebitNotification);
+
+            Assert.AreEqual(7000, statusNotification.AmountInCents);
+            Assert.AreEqual(7000, statusNotification.AmountPaidInCents);
+            Assert.IsNotNull(statusNotification.OnlineDebitTransaction);
+            Assert.AreEqual(Guid.Parse("B1B1092C-8681-40C2-A734-500F22683D9B"), statusNotification.MerchantKey);
+            Assert.AreEqual(Guid.Parse("1025FCB5-41D8-43B5-82FE-398F61E83879"), statusNotification.OrderKey);
+            Assert.AreEqual("9623472", statusNotification.OrderReference);
+            Assert.AreEqual(OrderStatusEnum.Paid, statusNotification.OrderStatus);
+
+            // OnlineDebitTransaction
+            Assert.AreEqual(7000, statusNotification.OnlineDebitTransaction.AmountInCents);
+            Assert.AreEqual(7000, statusNotification.OnlineDebitTransaction.AmountPaidInCents);
+            Assert.AreEqual("BancoDoBrasil", statusNotification.OnlineDebitTransaction.BankName);
+            Assert.AreEqual("22092015", statusNotification.OnlineDebitTransaction.BankPaymentDate);
+            Assert.AreEqual(ParseDateTime("2015-09-22T13:15:46.333"), statusNotification.OnlineDebitTransaction.StatusChangedDate);
+            Assert.AreEqual(Guid.Parse("751AE9F0-AF0B-4DE5-A483-2EFF2DE0FDF6"), statusNotification.OnlineDebitTransaction.TransactionKey);
+            Assert.AreEqual("00000000000012345", statusNotification.OnlineDebitTransaction.TransactionKeyToBank);
+            Assert.AreEqual("656885531", statusNotification.OnlineDebitTransaction.TransactionReference);
+            Assert.AreEqual(OnlineDebitTransactionStatusEnum.OpenedPendingPayment, statusNotification.OnlineDebitTransaction.PreviousOnlineDebitTransactionStatus);
+            Assert.AreEqual(OnlineDebitTransactionStatusEnum.Paid, statusNotification.OnlineDebitTransaction.OnlineDebitTransactionStatus);
+        }
+
+        [TestMethod]
+        public void ParseNotification_AllFields_Test() {
+            NotificationParser notificationParser = new NotificationParser();
+
+            var statusNotification = notificationParser.ParseNotification(fullNotification);
+
+            Assert.AreEqual(8500, statusNotification.AmountInCents);
+            Assert.AreEqual(8500, statusNotification.AmountPaidInCents);
+            Assert.IsNotNull(statusNotification.OnlineDebitTransaction);
+            Assert.IsNotNull(statusNotification.CreditCardTransaction);
+            Assert.IsNotNull(statusNotification.BoletoTransaction);
+            Assert.AreEqual(Guid.Parse("B1B1092C-8681-40C2-A734-500F22683D9B"), statusNotification.MerchantKey);
+            Assert.AreEqual(Guid.Parse("1025FCB5-41D8-43B5-82FE-398F61E83879"), statusNotification.OrderKey);
+            Assert.AreEqual("9623472", statusNotification.OrderReference);
+            Assert.AreEqual(OrderStatusEnum.Paid, statusNotification.OrderStatus);
+
+            // BoletoTransaction
+            Assert.AreEqual(1000, statusNotification.BoletoTransaction.AmountInCents);
+            Assert.AreEqual(1000, statusNotification.BoletoTransaction.AmountPaidInCents);
+            Assert.AreEqual(ParseDateTime("2015-09-21T15:42:04.573"), statusNotification.BoletoTransaction.BoletoExpirationDate);
+            Assert.AreEqual("0123456789", statusNotification.BoletoTransaction.NossoNumero);
+            Assert.AreEqual(ParseDateTime("2015-09-22T07:06:00.537"), statusNotification.BoletoTransaction.StatusChangedDate);
+            Assert.AreEqual(Guid.Parse("F7C4B737-E8B5-4BAA-BB47-6ED2A1A1EE09"), statusNotification.BoletoTransaction.TransactionKey);
+            Assert.AreEqual("6741137", statusNotification.BoletoTransaction.TransactionReference);
+            Assert.AreEqual(BoletoTransactionStatusEnum.Generated, statusNotification.BoletoTransaction.PreviousBoletoTransactionStatus);
+            Assert.AreEqual(BoletoTransactionStatusEnum.Paid, statusNotification.BoletoTransaction.BoletoTransactionStatus);
+
+            // CreditCardTransaction
+            CreditCardTransaction creditCardTransaction = statusNotification.CreditCardTransaction;
+            Assert.AreEqual("Simulator", creditCardTransaction.Acquirer);
+            Assert.AreEqual(500, creditCardTransaction.AmountInCents);
+            Assert.AreEqual("123456", creditCardTransaction.AuthorizationCode);
+            Assert.AreEqual(500, creditCardTransaction.AuthorizedAmountInCents);
+            Assert.AreEqual(500, creditCardTransaction.CapturedAmountInCents);
+            Assert.AreEqual("Mastercard", creditCardTransaction.CreditCardBrand);
+            Assert.AreEqual("String Content", creditCardTransaction.CustomStatus);
+            Assert.AreEqual(100, creditCardTransaction.RefundedAmountInCents);
+            Assert.AreEqual(this.ParseDateTime("2015-09-22T15:51:41.217"), creditCardTransaction.StatusChangedDate);
+            Assert.AreEqual("9876543210", creditCardTransaction.TransactionIdentifier);
+            Assert.AreEqual(Guid.Parse("4111D523-9A83-4BE3-94D2-160F1BC9C4BD"), creditCardTransaction.TransactionKey);
+            Assert.AreEqual("91735820", creditCardTransaction.TransactionReference);
+            Assert.AreEqual("63417982", creditCardTransaction.UniqueSequentialNumber);
+            Assert.AreEqual(100, creditCardTransaction.VoidedAmountInCents);
+            Assert.AreEqual(CreditCardTransactionStatusEnum.AuthorizedPendingCapture, creditCardTransaction.PreviousCreditCardTransactionStatus);
+            Assert.AreEqual(CreditCardTransactionStatusEnum.Captured, creditCardTransaction.CreditCardTransactionStatus);
+
+            // OnlineDebitTransaction
+            Assert.AreEqual(7000, statusNotification.OnlineDebitTransaction.AmountInCents);
+            Assert.AreEqual(7000, statusNotification.OnlineDebitTransaction.AmountPaidInCents);
+            Assert.AreEqual("BancoDoBrasil", statusNotification.OnlineDebitTransaction.BankName);
+            Assert.AreEqual("22092015", statusNotification.OnlineDebitTransaction.BankPaymentDate);
+            Assert.AreEqual(ParseDateTime("2015-09-22T13:15:46.333"), statusNotification.OnlineDebitTransaction.StatusChangedDate);
+            Assert.AreEqual(Guid.Parse("751AE9F0-AF0B-4DE5-A483-2EFF2DE0FDF6"), statusNotification.OnlineDebitTransaction.TransactionKey);
+            Assert.AreEqual("00000000000012345", statusNotification.OnlineDebitTransaction.TransactionKeyToBank);
+            Assert.AreEqual("656885531", statusNotification.OnlineDebitTransaction.TransactionReference);
+            Assert.AreEqual(OnlineDebitTransactionStatusEnum.OpenedPendingPayment, statusNotification.OnlineDebitTransaction.PreviousOnlineDebitTransactionStatus);
+            Assert.AreEqual(OnlineDebitTransactionStatusEnum.Paid, statusNotification.OnlineDebitTransaction.OnlineDebitTransactionStatus);
         }
 
         private DateTime ParseDateTime(string dateTime) {

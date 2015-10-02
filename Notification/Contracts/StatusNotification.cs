@@ -7,32 +7,31 @@ namespace GatewayApiClient.Notification.Contracts {
     //[DataContract(Name = "StatusNotification", Namespace = "http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract")]
     [DataContract(Name = "StatusNotification", Namespace = "")]
     public class StatusNotification {
-
-        [DataMember]
-        public CreditCardTransaction CreditCardTransaction { get; set; }
-
-        [DataMember]
-        public BoletoTransaction BoletoTransaction { get; set; }
-
-        [DataMember]
-        public OnlineDebitTransaction OnlineDebitTransaction { get; set; }
-
-        [DataMember]
-        public Guid MerchantKey { get; set; }
-
-        [DataMember]
-        public string OrderReference { get; set; }
-
-        [DataMember]
-        public Guid OrderKey { get; set; }
-
-        [DataMember]
+        [DataMember(Order = 0)]
         public long AmountInCents { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 1)]
         public long AmountPaidInCents { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 2)]
+        public BoletoTransaction BoletoTransaction { get; set; }
+
+        [DataMember(Order = 3)]
+        public CreditCardTransaction CreditCardTransaction { get; set; }
+
+        [DataMember(Order = 4)]
+        public Guid MerchantKey { get; set; }
+
+        [DataMember(Order = 5)]
+        public OnlineDebitTransaction OnlineDebitTransaction { get; set; }
+
+        [DataMember(Order = 6)]
+        public Guid OrderKey { get; set; }
+
+        [DataMember(Order = 7)]
+        public string OrderReference { get; set; }
+
+        [DataMember(Order = 8)]
         public OrderStatusEnum OrderStatus { get; set; }
     }
 }

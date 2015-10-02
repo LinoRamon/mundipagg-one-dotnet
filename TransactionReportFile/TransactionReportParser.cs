@@ -20,13 +20,15 @@ namespace GatewayApiClient.TransactionReportFile {
                 // Writes all report content into a memory stream.
                 using (StreamWriter streamWriter = new StreamWriter(memoryStream)) {
                     streamWriter.Write(reportContent);
+
+                    streamWriter.Flush();
+
+                    // Resets the memory stream position.
+                    memoryStream.Position = 0;
+
+                    // Parses the report.
+                    return this.ParseStream(memoryStream);
                 }
-
-                // Resets the memory stream position.
-                memoryStream.Position = 0;
-
-                // Parses the report.
-                return this.ParseStream(memoryStream);
             }
         }
 

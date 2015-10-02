@@ -6,8 +6,8 @@
         public const string DATE_FORMAT = "yyyyMMdd";
         public const string HDR_DATE_TIME_FORMAT = "yyyyMMdd HH:mm:ss";
         public const string CCT_DATE_TIME_FORMAT = "yyyy-MM-ddTHH:mm:ss";
-        public const string BT_DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
-        public const string ODT_DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
+        public const string BT_DATE_TIME_FORMAT = "M/d/yyyy h:mm:ss tt";
+        public const string ODT_DATE_TIME_FORMAT = "M/d/yyyy h:mm:ss tt";
 
         // Header Index Constants
         public const int IDX_HDR_TRANSACTION_PROCESSED_DATE = 1;

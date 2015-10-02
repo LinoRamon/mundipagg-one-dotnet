@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using GatewayApiClient.TransactionReportFile.Report;
 
@@ -41,11 +42,11 @@ namespace GatewayApiClient.TransactionReportFile.Parsers {
             boletoTransaction.Agency = elements[Constants.IDX_BT_AGENCY];
             boletoTransaction.Account = elements[Constants.IDX_BT_ACCOUNT];
             boletoTransaction.BarCode = elements[Constants.IDX_BT_BARCODE];
-            boletoTransaction.ExpirationDate = DateTime.ParseExact(elements[Constants.IDX_BT_EXPIRATION_DATE], Constants.BT_DATE_TIME_FORMAT, null);
+            boletoTransaction.ExpirationDate = DateTime.ParseExact(elements[Constants.IDX_BT_EXPIRATION_DATE], Constants.BT_DATE_TIME_FORMAT, CultureInfo.InvariantCulture);
             boletoTransaction.AmountInCents = long.Parse(elements[Constants.IDX_BT_AMOUNT_IN_CENTS]);
             boletoTransaction.AmountPaidInCents = string.IsNullOrWhiteSpace(elements[Constants.IDX_BT_AMOUNT_PAID_IN_CENTS]) == false ? long.Parse(elements[Constants.IDX_BT_AMOUNT_PAID_IN_CENTS]) : 0;
-            boletoTransaction.PaymentDate = string.IsNullOrWhiteSpace(elements[Constants.IDX_BT_PAYMENT_DATE]) == false ? DateTime.ParseExact(elements[Constants.IDX_BT_PAYMENT_DATE], Constants.BT_DATE_TIME_FORMAT, null) : (DateTime?)null;
-            boletoTransaction.CreditDate = string.IsNullOrWhiteSpace(elements[Constants.IDX_BT_CREDIT_DATE]) == false ? DateTime.ParseExact(elements[Constants.IDX_BT_CREDIT_DATE], Constants.BT_DATE_TIME_FORMAT, null) : (DateTime?)null;
+            boletoTransaction.PaymentDate = string.IsNullOrWhiteSpace(elements[Constants.IDX_BT_PAYMENT_DATE]) == false ? DateTime.ParseExact(elements[Constants.IDX_BT_PAYMENT_DATE], Constants.BT_DATE_TIME_FORMAT, CultureInfo.InvariantCulture) : (DateTime?)null;
+            boletoTransaction.CreditDate = string.IsNullOrWhiteSpace(elements[Constants.IDX_BT_CREDIT_DATE]) == false ? DateTime.ParseExact(elements[Constants.IDX_BT_CREDIT_DATE], Constants.BT_DATE_TIME_FORMAT, CultureInfo.InvariantCulture) : (DateTime?)null;
 
             return boletoTransaction;
         }
