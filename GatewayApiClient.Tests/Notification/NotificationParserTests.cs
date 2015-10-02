@@ -82,7 +82,7 @@ namespace GatewayApiClient.Tests.Notification {
     <CapturedAmountInCents>500</CapturedAmountInCents>
     <CreditCardBrand>Mastercard</CreditCardBrand>
     <CustomStatus />
-    
+    <RefundedAmountInCents />
     <StatusChangedDate>2015-09-22T15:51:41.217</StatusChangedDate>
     <TransactionIdentifier>9876543210</TransactionIdentifier>
     <TransactionKey>4111D523-9A83-4BE3-94D2-160F1BC9C4BD</TransactionKey>

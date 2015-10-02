@@ -4,19 +4,19 @@ using GatewayApiClient.Notification.Contracts.Enum;
 
 namespace GatewayApiClient.Notification.Contracts {
 
-    [DataContract(Namespace = "")]
+    [DataContract(Name = "CreditCardTransaction", Namespace = "")]
     public class CreditCardTransaction {
 
-        [DataMember]
+        [DataMember(Order = 0)]
         public string Acquirer { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 1)]
         public long AmountInCents { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 2)]
         public string AuthorizationCode { get; set; }
 
-        [DataMember(Name = "AuthorizedAmountInCents")]
+        [DataMember(Name = "AuthorizedAmountInCents", Order = 3)]
         private string AuthorizedAmountInCentsField {
             get {
                 if (this.AuthorizedAmountInCents == null) { return null; }
@@ -35,7 +35,7 @@ namespace GatewayApiClient.Notification.Contracts {
         [IgnoreDataMember]
         public Nullable<long> AuthorizedAmountInCents { get; set; }
 
-        [DataMember(Name = "CapturedAmountInCents")]
+        [DataMember(Name = "CapturedAmountInCents", Order = 4)]
         private string CapturedAmountInCentsField {
             get {
                 if (this.CapturedAmountInCents == null) { return null; }
@@ -54,13 +54,13 @@ namespace GatewayApiClient.Notification.Contracts {
         [IgnoreDataMember]
         public Nullable<long> CapturedAmountInCents { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 5)]
         public string CreditCardBrand { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 6)]
         public string CustomStatus { get; set; }
 
-        [DataMember(Name = "RefundedAmountInCents")]
+        [DataMember(Name = "RefundedAmountInCents", Order = 7)]
         private string RefundedAmountInCentsField {
             get {
                 if (this.RefundedAmountInCents == null) {
@@ -81,22 +81,22 @@ namespace GatewayApiClient.Notification.Contracts {
         [IgnoreDataMember]
         public Nullable<long> RefundedAmountInCents { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 8)]
         public DateTime StatusChangedDate { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 9)]
         public string TransactionIdentifier { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 10)]
         public Guid TransactionKey { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 11)]
         public string TransactionReference { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 12)]
         public string UniqueSequentialNumber { get; set; }
 
-        [DataMember(Name = "VoidedAmountInCents")]
+        [DataMember(Name = "VoidedAmountInCents", Order = 13)]
         private string VoidedAmountInCentsField {
             get {
                 if (this.VoidedAmountInCents == null) { return null; }
@@ -115,28 +115,24 @@ namespace GatewayApiClient.Notification.Contracts {
         [IgnoreDataMember]
         public Nullable<long> VoidedAmountInCents { get; set; }
 
-        [DataMember(Name = "PreviousCreditCardTransactionStatus")]
-        private string PreviousCreditCardTransactionStatusField
-        {
+        [DataMember(Name = "PreviousCreditCardTransactionStatus", Order = 14)]
+        private string PreviousCreditCardTransactionStatusField {
             get { return this.PreviousCreditCardTransactionStatus.ToString(); }
-            set
-            {
+            set {
                 this.PreviousCreditCardTransactionStatus =
-                    (CreditCardTransactionStatusEnum) System.Enum.Parse(typeof (CreditCardTransactionStatusEnum), value);
+                    (CreditCardTransactionStatusEnum)System.Enum.Parse(typeof(CreditCardTransactionStatusEnum), value);
             }
         }
 
         [IgnoreDataMember]
         public CreditCardTransactionStatusEnum PreviousCreditCardTransactionStatus { get; set; }
 
-        [DataMember(Name = "CreditCardTransactionStatus")]
-        private string CreditCardTransactionStatusField
-        {
+        [DataMember(Name = "CreditCardTransactionStatus", Order = 15)]
+        private string CreditCardTransactionStatusField {
             get { return this.CreditCardTransactionStatus.ToString(); }
-            set
-            {
+            set {
                 this.CreditCardTransactionStatus =
-                    (CreditCardTransactionStatusEnum) System.Enum.Parse(typeof (CreditCardTransactionStatusEnum), value);
+                    (CreditCardTransactionStatusEnum)System.Enum.Parse(typeof(CreditCardTransactionStatusEnum), value);
             }
         }
 
