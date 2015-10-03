@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GatewayApiClient.Tests.TransactionReportFile {
 
     [TestClass]
-    public class TransactionReportParserTests : GatewayServiceClientTests {
+    public class TransactionReportParserTests : BaseTests {
         #region HostUri
         private readonly Uri _hostUri = new Uri("https://apisandbox.mundipaggone.com:8443/");
         #endregion

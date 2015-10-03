@@ -11,11 +11,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GatewayApiClient.Tests {
     [TestClass]
-    public class GatewayServiceClientTests {
+    public class GatewayServiceClientTests : BaseTests {
         
-        #region MerchantKey & EndPoint
-        public readonly Guid MerchantKey = Guid.Parse("merchantKey");
-
+        #region EndPoint
         private readonly Uri _endpoint = new Uri("https://stagingv2.mundipaggone.com");
         #endregion
         
