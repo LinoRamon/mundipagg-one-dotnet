@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using GatewayApiClient.TransactionReportFile;
+using GatewayApiClient.TransactionReportFile.Report;
 using GatewayApiClient.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -36,7 +37,7 @@ namespace GatewayApiClient.Tests.TransactionReportFile {
 
             TransactionReportParser transactionReportParser = new TransactionReportParser();
 
-            var response = transactionReportParser.ParseString(httpResponse.RawResponse);
+            TransactionReport response = transactionReportParser.ParseString(httpResponse.RawResponse);
 
             Assert.AreEqual(response.Header.ReportFileCreateDate, new DateTime(2015, 9, 16));
         }
@@ -74,7 +75,7 @@ namespace GatewayApiClient.Tests.TransactionReportFile {
             // Generate temporary file
             string tempFile = Path.GetTempFileName();
 
-            // Faz o download para a variável
+            // Faz o download para o hd
             HttpStatusCode httpResponse = transactionReportClient.DownloadReportToFile(new DateTime(2015, 9, 19), tempFile);
 
             Assert.AreEqual(HttpStatusCode.OK, httpResponse);

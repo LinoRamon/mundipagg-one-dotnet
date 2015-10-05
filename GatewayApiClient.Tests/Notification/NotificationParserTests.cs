@@ -1,12 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 using GatewayApiClient.Notification;
 using GatewayApiClient.Notification.Contracts;
 using GatewayApiClient.Notification.Contracts.Enum;
-using GatewayApiClient.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GatewayApiClient.Tests.Notification {
@@ -152,28 +147,7 @@ namespace GatewayApiClient.Tests.Notification {
 
         #endregion
 
-        [TestMethod]
-        public void ParseNotification_Full_Test() {
-
-            //NotificationParser notificationParser = new NotificationParser();
-            //StatusNotification statusNotification = notificationParser.ParseNotification(this.fullNotification);
-
-            //Assert.AreEqual(500, statusNotification.AmountInCents);
-            //Assert.AreEqual(500, statusNotification.AmountPaidInCents);
-            //Assert.IsNotNull(statusNotification.CreditCardTransaction);
-            //Assert.IsNotNull(statusNotification.BoletoTransaction);
-            //Assert.IsNotNull(statusNotification.OnlineDebitTransaction);
-            //Assert.AreEqual(Guid.Parse("B1B1092C-8681-40C2-A734-500F22683D9B"), statusNotification.MerchantKey);
-            //Assert.AreEqual(Guid.Parse("18471F05-9F6D-4497-9C24-D60D5BBB6BBE"), statusNotification.OrderKey);
-            //Assert.AreEqual("64a85875", statusNotification.OrderReference);
-            //Assert.AreEqual(OrderStatusEnum.Paid, statusNotification.OrderStatus);
-
-            //// CreditCardTransaction
-            //CreditCardTransaction creditCardTransaction = statusNotification.CreditCardTransaction;
-            ////Assert.AreEqual(500, statusNotification.CreditCardTransaction.);
-        }
-
-        [TestMethod]
+       [TestMethod]
         public void ParseNotification_CreditCard_Test() {
 
             NotificationParser notificationParser = new NotificationParser();
