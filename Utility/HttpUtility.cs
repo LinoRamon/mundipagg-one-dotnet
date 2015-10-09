@@ -114,6 +114,7 @@ namespace GatewayApiClient.Utility {
             }
             catch (WebException ex) {
 
+                if (ex.Response == null) { throw; }
                 HttpWebResponse response = (HttpWebResponse)ex.Response;
                 StreamReader test = new StreamReader(response.GetResponseStream());
                 rawResponse = test.ReadToEnd();
