@@ -31,7 +31,7 @@ namespace GatewayApiClient.Tests.TransactionReportFile {
             TransactionReportClient transactionReportClient = new TransactionReportClient(MerchantKey, _hostUri);
 
             // Faz o download para a variável
-            HttpResponse httpResponse = transactionReportClient.DownloadReport(new DateTime(2015, 9, 15));
+            HttpResponse httpResponse = transactionReportClient.DownloadReport(new DateTime(2015, 9, 19));
 
             Assert.AreEqual(HttpStatusCode.OK, httpResponse.HttpStatusCode);
 
@@ -39,7 +39,7 @@ namespace GatewayApiClient.Tests.TransactionReportFile {
 
             TransactionReport response = transactionReportParser.ParseString(httpResponse.RawResponse);
 
-            Assert.AreEqual(response.Header.ReportFileCreateDate, new DateTime(2015, 9, 16));
+            Assert.AreEqual(response.Header.ReportFileCreateDate, new DateTime(2015, 9, 20));
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace GatewayApiClient.Tests.TransactionReportFile {
             string tempFile = Path.GetTempFileName();
 
             // Faz o download para a variável
-            HttpStatusCode httpResponse = transactionReportClient.DownloadReportToFile(new DateTime(2015, 9, 15), tempFile);
+            HttpStatusCode httpResponse = transactionReportClient.DownloadReportToFile(new DateTime(2015, 9, 19), tempFile);
 
 
             Assert.AreEqual(HttpStatusCode.OK, httpResponse);
@@ -61,7 +61,7 @@ namespace GatewayApiClient.Tests.TransactionReportFile {
             // Faz o parse do arquivo temporário
             var response = transactionReportParser.ParseFile(tempFile);
 
-            Assert.AreEqual(response.Header.ReportFileCreateDate, new DateTime(2015, 9, 16));
+            Assert.AreEqual(response.Header.ReportFileCreateDate, new DateTime(2015, 9, 20));
 
             // Deleta o arquivo temporário na máquina
             File.Delete(tempFile);

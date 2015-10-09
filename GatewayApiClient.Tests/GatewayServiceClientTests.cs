@@ -14,7 +14,7 @@ namespace GatewayApiClient.Tests {
     public class GatewayServiceClientTests : BaseTests {
 
         #region EndPoint
-        private readonly Uri _endpoint = new Uri("https://stagingv2.mundipaggone.com");
+        private readonly Uri _endpoint = new Uri("https://sandbox.mundipaggone.com");
         #endregion
 
         #region Variables
