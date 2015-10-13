@@ -1,5 +1,4 @@
 ﻿using System;
-using GatewayApiClient.EnumTypes;
 using GatewayApiClient.ResourceClients.Interfaces;
 using GatewayApiClient.Utility;
 
@@ -12,19 +11,15 @@ namespace GatewayApiClient.ResourceClients {
 
         public Guid MerchantKey { get; set; }
 
-        public PlatformEnvironment PlatformEnvironment { get; set; }
-
-        protected HttpContentTypeEnum HttpContentType { get; private set; }
-
         private string _hostUri;
         protected string HostUri { get { return _hostUri; } }
 
         internal HttpUtility HttpUtility { get; set; }
 
-        protected BaseResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, string resourceName)
-            : this(merchantKey, platformEnvironment, httpContentType, resourceName, null) { }
+        protected BaseResource(Guid merchantKey, string resourceName)
+            : this(merchantKey, resourceName, null) { }
 
-        protected BaseResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, string resourceName, Uri hostUri) {
+        protected BaseResource(Guid merchantKey, string resourceName, Uri hostUri) {
 
             if (merchantKey == Guid.Empty) {
                 merchantKey = ConfigurationUtility.GetConfigurationKey("MerchantKey");
@@ -34,28 +29,19 @@ namespace GatewayApiClient.ResourceClients {
             System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
             this.MerchantKey = merchantKey;
-            this.PlatformEnvironment = platformEnvironment;
-            this.HttpContentType = httpContentType;
             if (hostUri != null) {
                 this._hostUri = hostUri.ToString();
                 this._hostUri = this._hostUri.Remove(this._hostUri.Length - 1);
             }
             else {
-                this._hostUri = this.GetServiceUri(platformEnvironment);
+                this._hostUri = this.GetServiceUri();
             }
             this._resourceName = resourceName;
         }
 
-        private string GetServiceUri(PlatformEnvironment platformEnvironment) {
+        private string GetServiceUri() {
 
-            switch (platformEnvironment) {
-                case PlatformEnvironment.Production:
-                    return ConfigurationUtility.GetConfigurationString("ProductionHostUri");
-                case PlatformEnvironment.Sandbox:
-                    return ConfigurationUtility.GetConfigurationString("SandboxHostUri");
-                default:
-                    return null;
-            }
+            return ConfigurationUtility.GetConfigurationString("GatewayService_HostUri");
         }
     }
 }

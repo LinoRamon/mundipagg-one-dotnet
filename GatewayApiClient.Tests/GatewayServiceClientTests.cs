@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
-using System.Security.Policy;
 using GatewayApiClient.DataContracts;
 using GatewayApiClient.DataContracts.EnumTypes;
 using GatewayApiClient.EnumTypes;
@@ -54,7 +53,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCreateCreditCardSale() {
             // Cria o client que enviará a transação.
-            IGatewayServiceClient serviceClient = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient serviceClient = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Autoriza a transação de cartão de crédito e recebe a resposta do gateway.
             HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
@@ -65,7 +64,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCreateBoletoSale() {
             // Cria o client que enviará a transação.
-            IGatewayServiceClient serviceClient = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient serviceClient = new GatewayServiceClient(MerchantKey, _endpoint);
 
             HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(_createBoletoSaleRequest);
 
@@ -75,7 +74,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCancelATransaction() {
             // Cria o cliente para cancelar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Cria transação de cartão de crédito para ser cancelada
             HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
@@ -93,7 +92,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCaptureATransaction() {
             // Cria o cliente para Capturar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Cria transação de cartão de crédito para ser capturada
             HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
@@ -111,7 +110,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldRetryATransaction() {
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Cria transação de cartão de crédito para ser retentada
             HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
@@ -129,7 +128,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldDoQueryMethod() {
             // Cria o cliente para consultar o pedido.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Cria transação de cartão de crédito para ser consultada
             HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
@@ -215,7 +214,7 @@ namespace GatewayApiClient.Tests {
             saleRequest.Options.IsAntiFraudEnabled = true;
 
             // Cria o cliente que enviará a transação para a MundiPagg.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Autoriza a transação de cartão de crédito e recebe a resposta do gateway.
             HttpResponse<CreateSaleResponse> httpResponse = client.Sale.Create(saleRequest);
@@ -226,7 +225,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldConsultInstantBuyKey() {
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Cria transação de cartão de crédito para ser retentada
             HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
@@ -256,7 +255,7 @@ namespace GatewayApiClient.Tests {
             _createCreditCardSaleRequest.Buyer = buyer;
 
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Cria transação de cartão de crédito para ser retentada
             HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
@@ -274,7 +273,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCreateATransactionWithInstantBuyKey() {
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Xml, _endpoint);
+            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
 
             // Cria transação de cartão de crédito para ser retentada
             HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);

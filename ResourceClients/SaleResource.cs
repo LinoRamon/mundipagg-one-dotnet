@@ -10,8 +10,8 @@ namespace GatewayApiClient.ResourceClients {
 
     public class SaleResource : BaseResource, ISaleResource {
 
-        public SaleResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType) : base(merchantKey, platformEnvironment, httpContentType , "/Sale") { }
-        public SaleResource(Guid merchantKey, PlatformEnvironment platformEnvironment, HttpContentTypeEnum httpContentType, Uri hostUri) : base(merchantKey, platformEnvironment, httpContentType, "/Sale", hostUri) { }
+        public SaleResource(Guid merchantKey) : this(merchantKey, null) { }
+        public SaleResource(Guid merchantKey, Uri hostUri) : base(merchantKey, "/Sale", hostUri) { }
 
         #region Create
 
@@ -28,7 +28,7 @@ namespace GatewayApiClient.ResourceClients {
             
             // Envia requisição
             return this.HttpUtility.SubmitRequest<CreateSaleRequest, CreateSaleResponse>(createSaleRequest,
-                string.Concat(this.HostUri, this.ResourceName), HttpVerbEnum.Post, this.HttpContentType, header);
+                string.Concat(this.HostUri, this.ResourceName), HttpVerbEnum.Post, HttpContentTypeEnum.Json, header);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace GatewayApiClient.ResourceClients {
 
             // Envia requisição
             return this.HttpUtility.SubmitRequest<ManageSaleRequest, ManageSaleResponse>(manageSaleRequest,
-                string.Concat(this.HostUri, this.ResourceName, "/", actionName), HttpVerbEnum.Post, this.HttpContentType, header);
+                string.Concat(this.HostUri, this.ResourceName, "/", actionName), HttpVerbEnum.Post, HttpContentTypeEnum.Json, header);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace GatewayApiClient.ResourceClients {
 
             // Envia requisição
             return this.HttpUtility.SubmitRequest<RetrySaleRequest, RetrySaleResponse>(retrySaleRequest,
-                string.Concat(this.HostUri, this.ResourceName, "/Retry"), HttpVerbEnum.Post, this.HttpContentType, header);
+                string.Concat(this.HostUri, this.ResourceName, "/Retry"), HttpVerbEnum.Post, HttpContentTypeEnum.Json, header);
         }
 
         public HttpResponse<RetrySaleResponse> Retry(Guid orderKey) {
@@ -270,7 +270,7 @@ namespace GatewayApiClient.ResourceClients {
             NameValueCollection header = new NameValueCollection();
             header.Add("MerchantKey", this.MerchantKey.ToString());
 
-            return this.HttpUtility.SubmitRequest<QuerySaleResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, this.HttpContentType, header);
+            return this.HttpUtility.SubmitRequest<QuerySaleResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, HttpContentTypeEnum.Json, header);
         }
 
         #endregion
