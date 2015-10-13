@@ -1,7 +1,6 @@
-﻿using GatewayApiClient.EnumTypes;
+﻿using System;
 using GatewayApiClient.ResourceClients;
 using GatewayApiClient.ResourceClients.Interfaces;
-using System;
 
 namespace GatewayApiClient {
 

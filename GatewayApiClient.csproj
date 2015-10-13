@@ -62,7 +62,6 @@
     <Compile Include="DataContracts\AntiFraud\AntiFraudAnalysisResult.cs" />
     <Compile Include="DataContracts\AntiFraud\QuerySaleAntiFraudAnalysisData.cs" />
     <Compile Include="DataContracts\AntiFraud\QuerySaleAntiFraudAnalysisHistoryData.cs" />
-    <Compile Include="DataContracts\BaseRequest.cs" />
     <Compile Include="DataContracts\BaseResponse.cs" />
     <Compile Include="DataContracts\BoletoTransaction\BoletoTransactionData.cs" />
     <Compile Include="DataContracts\BoletoTransaction\BoletoTransactionOptions.cs" />

@@ -7,7 +7,7 @@ namespace GatewayApiClient.DataContracts {
     /// Criação de uma nova venda
     /// </summary>
     [DataContract(Name = "CreateSaleRequest", Namespace = "")]
-    public class CreateSaleRequest : BaseRequest {
+    public class CreateSaleRequest {
 
         public CreateSaleRequest() {
             Options = new SaleOptions();
