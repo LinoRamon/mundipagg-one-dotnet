@@ -119,7 +119,6 @@
     <Compile Include="DataContracts\ShoppingCart\ShoppingCartItem.cs" />
     <Compile Include="EnumTypes\HttpContentTypeEnum.cs" />
     <Compile Include="EnumTypes\ManageOperationEnum.cs" />
-    <Compile Include="EnumTypes\PlatformEnvironment.cs" />
     <Compile Include="IGatewayServiceClient.cs" />
     <Compile Include="GatewayServiceClient.cs" />
     <Compile Include="Notification\Contracts\BoletoTransaction.cs">
