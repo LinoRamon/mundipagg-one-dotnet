@@ -8,7 +8,7 @@ namespace GatewayApiClient.DataContracts {
     /// Gerenciar Venda
     /// </summary>
     [DataContract(Name = "ManageSaleRequest", Namespace = "")]
-    public class ManageSaleRequest : BaseRequest {
+    public class ManageSaleRequest {
 
         /// <summary>
         /// Coleções de transdações de cartão de crédito

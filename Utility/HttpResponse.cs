@@ -3,17 +3,17 @@
 namespace GatewayApiClient.Utility {
 
     /// <summary>
-    /// Resposta do gateway
+    /// Represents a http response.
     /// </summary>
     public class HttpResponse {
 
         /// <summary>
-        /// Mensagem serializada recebida do gateway. (XML ou JSON)
+        /// Serialized response from the api.
         /// </summary>
         public string RawResponse { get; private set; }
 
         /// <summary>
-        /// Código HTTP retornado pelo gateway.
+        /// Http status code from the api.
         /// </summary>
         public HttpStatusCode HttpStatusCode { get; private set; }
 
@@ -25,13 +25,13 @@ namespace GatewayApiClient.Utility {
     }
 
     /// <summary>
-    /// Resposta do gateway
+    /// Represents a http response.
     /// </summary>
-    /// <typeparam name="TResponse">Tipo de resposta</typeparam>
+    /// <typeparam name="TResponse">Defines the response class</typeparam>
     public class HttpResponse<TResponse> : HttpResponse {
 
         /// <summary>
-        /// Objeto que representa a resposta do gateway.
+        /// The deserialized response from the api.
         /// </summary>
         public TResponse Response { get; private set; }
 
@@ -43,19 +43,19 @@ namespace GatewayApiClient.Utility {
     }
 
     /// <summary>
-    /// Resposta do gateway
+    /// Represents a http response.
     /// </summary>
-    /// <typeparam name="TResponse">Tipo de resposta</typeparam>
-    /// <typeparam name="TRequest">Tipo de requisição</typeparam>
+    /// <typeparam name="TResponse">Defines the response class</typeparam>
+    /// <typeparam name="TRequest">Defines the request class</typeparam>
     public class HttpResponse<TResponse, TRequest> : HttpResponse<TResponse> {
 
         /// <summary>
-        /// Objeto que representa a requisição enviada para o gateway
+        /// The deserialized request sent to the api.
         /// </summary>
         public TRequest Request { get; private set; }
 
         /// <summary>
-        /// Mensagem serializada enviada para o gateway. (XML ou JSON)
+        /// The serialized request sent to the api.
         /// </summary>
         public string RawRequest { get; private set; }
 

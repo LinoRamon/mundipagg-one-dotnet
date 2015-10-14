@@ -8,7 +8,7 @@ namespace GatewayApiClient.DataContracts {
     /// Pedido de retentativa
     /// </summary>
     [DataContract(Name = "RetrySaleResquest", Namespace = "")]
-    public class RetrySaleRequest : BaseRequest {
+    public class RetrySaleRequest {
 
         /// <summary>
         /// Chave do pedido. Utilizada para identificar um pedido no gateway

@@ -1,11 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
-namespace GatewayApiClient.DataContracts.EnumTypes {
+namespace GatewayApiClient.Notification.Contracts.Enum {
 
-    /// <summary>
-    /// Status das transações de cartão de crédito
-    /// </summary>
-    [DataContract]
     public enum CreditCardTransactionStatusEnum {
 
         /// <summary>
@@ -67,6 +63,12 @@ namespace GatewayApiClient.DataContracts.EnumTypes {
         /// </summary>
         [EnumMember]
         Deposited = 10,
+
+        /// <summary>
+        /// Aberto e pendente de autorização
+        /// </summary>
+        [EnumMember]
+        OpenedPendindAuth = 11,
 
         /// <summary>
         /// Chargeback

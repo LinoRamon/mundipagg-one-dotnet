@@ -1,5 +1,4 @@
 ﻿using System;
-using GatewayApiClient.EnumTypes;
 
 namespace GatewayApiClient.ResourceClients.Interfaces {
 
@@ -9,11 +8,6 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         /// Chave da loja. Utilizada para identificar uma loja no gateway.
         /// </summary>
         Guid MerchantKey { get; set; }
-
-        /// <summary>
-        /// Ambiente do gateway que será utilizado.
-        /// </summary>
-        PlatformEnvironment PlatformEnvironment { get; set; }
 
         /// <summary>
         /// Nome do recurso que será acessado.

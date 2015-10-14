@@ -2,13 +2,20 @@
 <package >
   <metadata>
     <id>MundiPagg.Gateway.Client</id>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <authors>MundiPagg</authors>
     <owners>MundiPagg</owners>
     <projectUrl>https://github.com/mundipagg/mundipagg-one-dotnet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MundiPagg Gateway Client</description>
-    <releaseNotes>Renaming RetryOrderCreditCardTransacionResponse field to CreditCardTransactionResultCollection.</releaseNotes>
+    <releaseNotes>
+    Implemented TransactionReportFile parser and client.
+    Implemented Notification parser.
+    Removed xml support from the transactional api client.
+    Removed RequestKey field from all requests.
+    Added test project.
+    Removed PlatformEnvironment configuration from the sdk.
+    </releaseNotes>
     <copyright>MundiPagg 2015</copyright>
     <tags>MundiPagg Credit Card Payment Boleto Gateway Transaction</tags>
   </metadata>

@@ -3,17 +3,16 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using GatewayApiClient.EnumTypes;
+using GatewayApiClient.Serialization;
 
 namespace GatewayApiClient.Utility {
 
     internal class HttpUtility {
 
         /// <summary>
-        /// Envia uma requisição para o gateway
+        /// Sends a http request to the api.
         /// </summary>
         /// <typeparam name="TResponse">Tipo de resposta do gateway</typeparam>
         /// <param name="serviceUri">Url do serviço do gateway</param>
@@ -32,7 +31,7 @@ namespace GatewayApiClient.Utility {
         }
 
         /// <summary>
-        /// Envia uma requisição para o gateway
+        /// Sends a http request to the api.
         /// </summary>
         /// <typeparam name="TRequest">Tipo de requisição enviada para o gateway</typeparam>
         /// <typeparam name="TResponse">Tipo de resposta do gateway</typeparam>
@@ -50,63 +49,6 @@ namespace GatewayApiClient.Utility {
 
             return response;
         }
-        
-        /// <summary>
-        /// Cria uma requisição http com um objeto do especificado em TRequest e retorna um objeto do tipo especificado em TResponse.
-        /// </summary>
-        /// <typeparam name="TResponse"></typeparam>
-        /// <typeparam name="TRequest"></typeparam>
-        /// <param name="request"></param>
-        /// <param name="httpVerbEnum"></param>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="headerData"></param>
-        /// <param name="allowInvalidCertificate"></param>
-        /// <param name="ignoreResponse"></param>
-        /// <returns></returns>
-        private HttpResponse<TResponse, TRequest> SendHttpWebRequest<TResponse, TRequest>(TRequest request, HttpVerbEnum httpVerbEnum, HttpContentTypeEnum httpContentType, string serviceEndpoint, NameValueCollection headerData = null) {
-
-            // Serializa o request como json.
-            string rawRequest = this.SerializeObject<TRequest>(request, httpContentType);
-
-            // Se o header é nulo, instancia um novo.
-            headerData = headerData ?? new NameValueCollection();
-
-            // Envia o request.
-            HttpResponse httpResponse = this.SendHttpWebRequest(rawRequest, httpVerbEnum, httpContentType, serviceEndpoint, headerData);
-
-            // Deserializa a resposta.
-            TResponse responseObject = this.DeserializeObject<TResponse>(httpResponse.RawResponse, httpContentType);
-
-            HttpResponse<TResponse, TRequest> response = new HttpResponse<TResponse, TRequest>(request, rawRequest, responseObject, httpResponse.RawResponse, httpResponse.HttpStatusCode);
-
-            return response;
-        }
-
-        /// <summary>
-        /// Cria uma requisição http e retorna um objeto do tipo especificado em TResponse.
-        /// </summary>
-        /// <typeparam name="TResponse"></typeparam>
-        /// <param name="httpVerbEnum"></param>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="headerData"></param>
-        /// <param name="allowInvalidCertificate"></param>
-        /// <param name="ignoreResponse"></param>
-        /// <returns></returns>
-        private HttpResponse<TResponse> SendHttpWebRequest<TResponse>(HttpVerbEnum httpVerbEnum, HttpContentTypeEnum httpContentType, string serviceEndpoint, NameValueCollection headerData = null) {
-
-            // Se o header é nulo, instancia um novo.
-            headerData = headerData ?? new NameValueCollection();
-
-            // Envia o request.
-            HttpResponse httpResponse = this.SendHttpWebRequest("", httpVerbEnum, httpContentType, serviceEndpoint, headerData);
-
-            // Deserializa a resposta.
-            TResponse responseObject = this.DeserializeObject<TResponse>(httpResponse.RawResponse, httpContentType);
-
-            HttpResponse<TResponse> response = new HttpResponse<TResponse>(responseObject, httpResponse.RawResponse, httpResponse.HttpStatusCode);
-
-            return response;
-        }
 
         /// <summary>
         /// Envio de HttpWebRequest
@@ -119,7 +61,7 @@ namespace GatewayApiClient.Utility {
         /// <param name="allowInvalidCertificate"></param>
         /// <param name="ignoreResponse"></param>
         /// <returns></returns>
-        private HttpResponse SendHttpWebRequest(string dataToSend, HttpVerbEnum httpVerbEnum, HttpContentTypeEnum httpContentTypeEnum, string serviceEndpoint, NameValueCollection headerData, bool allowInvalidCertificate = false) {
+        public HttpResponse SendHttpWebRequest(string dataToSend, HttpVerbEnum httpVerbEnum, string contentType, string accept, string serviceEndpoint, NameValueCollection headerData) {
 
             if (string.IsNullOrWhiteSpace(serviceEndpoint)) { throw new ArgumentException("serviceEndpoint"); }
 
@@ -128,17 +70,12 @@ namespace GatewayApiClient.Utility {
 
             HttpWebRequest httpWebRequest = WebRequest.Create(serviceUri) as HttpWebRequest;
             httpWebRequest.Method = httpVerbEnum.ToString().ToUpper();
-            httpWebRequest.ContentType = httpContentTypeEnum == HttpContentTypeEnum.Json ? "application/json" : "text/xml";
-            httpWebRequest.Accept = httpContentTypeEnum == HttpContentTypeEnum.Json ? "application/json" : "text/xml";
+            if (string.IsNullOrEmpty(contentType) == false) { httpWebRequest.ContentType = contentType; }
+            if (string.IsNullOrEmpty(accept) == false) { httpWebRequest.Accept = accept; }
 
             if (headerData != null && headerData.AllKeys.Contains("User-Agent") == true) {
                 httpWebRequest.UserAgent = headerData["User-Agent"];
                 headerData.Remove("User-Agent");
-            }
-
-            // Verifica se certificados inválidos devem ser aceitos.
-            if (allowInvalidCertificate == true) {
-                ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             }
 
             // Verifica se deverão ser enviados dados/chaves de cabeçalho
@@ -177,6 +114,7 @@ namespace GatewayApiClient.Utility {
             }
             catch (WebException ex) {
 
+                if (ex.Response == null) { throw; }
                 HttpWebResponse response = (HttpWebResponse)ex.Response;
                 StreamReader test = new StreamReader(response.GetResponseStream());
                 rawResponse = test.ReadToEnd();
@@ -184,6 +122,67 @@ namespace GatewayApiClient.Utility {
             }
 
             return new HttpResponse(rawResponse, statusCode);
+        }
+
+        /// <summary>
+        /// Cria uma requisição http com um objeto do especificado em TRequest e retorna um objeto do tipo especificado em TResponse.
+        /// </summary>
+        /// <typeparam name="TResponse"></typeparam>
+        /// <typeparam name="TRequest"></typeparam>
+        /// <param name="request"></param>
+        /// <param name="httpVerbEnum"></param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="headerData"></param>
+        /// <param name="allowInvalidCertificate"></param>
+        /// <param name="ignoreResponse"></param>
+        /// <returns></returns>
+        private HttpResponse<TResponse, TRequest> SendHttpWebRequest<TResponse, TRequest>(TRequest request, HttpVerbEnum httpVerbEnum, HttpContentTypeEnum httpContentType, string serviceEndpoint, NameValueCollection headerData = null) {
+
+            // Serializa o request como json.
+            string rawRequest = this.SerializeObject<TRequest>(request, httpContentType);
+
+            // Se o header é nulo, instancia um novo.
+            headerData = headerData ?? new NameValueCollection();
+
+            string contentType = this.GetContentTypeFromEnum(httpContentType);
+
+            // Envia o request.
+            HttpResponse httpResponse = this.SendHttpWebRequest(rawRequest, httpVerbEnum, contentType, contentType, serviceEndpoint, headerData);
+
+            // Deserializa a resposta.
+            TResponse responseObject = this.DeserializeObject<TResponse>(httpResponse.RawResponse, httpContentType);
+
+            HttpResponse<TResponse, TRequest> response = new HttpResponse<TResponse, TRequest>(request, rawRequest, responseObject, httpResponse.RawResponse, httpResponse.HttpStatusCode);
+
+            return response;
+        }
+
+        /// <summary>
+        /// Cria uma requisição http e retorna um objeto do tipo especificado em TResponse.
+        /// </summary>
+        /// <typeparam name="TResponse"></typeparam>
+        /// <param name="httpVerbEnum"></param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="headerData"></param>
+        /// <param name="allowInvalidCertificate"></param>
+        /// <param name="ignoreResponse"></param>
+        /// <returns></returns>
+        private HttpResponse<TResponse> SendHttpWebRequest<TResponse>(HttpVerbEnum httpVerbEnum, HttpContentTypeEnum httpContentType, string serviceEndpoint, NameValueCollection headerData = null) {
+
+            // Se o header é nulo, instancia um novo.
+            headerData = headerData ?? new NameValueCollection();
+
+            string contentType = this.GetContentTypeFromEnum(httpContentType);
+
+            // Envia o request.
+            HttpResponse httpResponse = this.SendHttpWebRequest("", httpVerbEnum, contentType, contentType, serviceEndpoint, headerData);
+
+            // Deserializa a resposta.
+            TResponse responseObject = this.DeserializeObject<TResponse>(httpResponse.RawResponse, httpContentType);
+
+            HttpResponse<TResponse> response = new HttpResponse<TResponse>(responseObject, httpResponse.RawResponse, httpResponse.HttpStatusCode);
+
+            return response;
         }
 
         #region Serialization
@@ -197,27 +196,11 @@ namespace GatewayApiClient.Utility {
         /// <returns></returns>
         private string SerializeObject<T>(T obj, HttpContentTypeEnum httpContentType) {
 
-            if (obj == null) { return null; }
-
-            string serializedString = string.Empty;
-
-            // Classe de serialização Json
-            XmlObjectSerializer serializer = null;
-            if (httpContentType == HttpContentTypeEnum.Json) {
-                serializer = new DataContractJsonSerializer(typeof(T));
-            }
-            else if (httpContentType == HttpContentTypeEnum.Xml) {
-                serializer = new DataContractSerializer(typeof(T));
-            }
-
-            // Serializa o objeto para o memoryStream
-            MemoryStream memoryStream = new MemoryStream();
-            serializer.WriteObject(memoryStream, obj);
+            // Obtém um serializador para o content type definido.
+            ISerializer serializer = SerializerFactory.Create(httpContentType.ToString());
 
             // Recupera a string correspondente ao objeto serializado
-            serializedString = Encoding.UTF8.GetString(memoryStream.ToArray());
-
-            memoryStream.Close();
+            string serializedString = serializer.SerializeObject<T>(obj);
 
             return serializedString;
         }
@@ -231,25 +214,25 @@ namespace GatewayApiClient.Utility {
         /// <returns></returns>
         private T DeserializeObject<T>(string serializedObject, HttpContentTypeEnum httpContentType) {
 
-            // Classe de serialização Json
-            XmlObjectSerializer deserializer = null;
-
-            if (httpContentType == HttpContentTypeEnum.Json) {
-                deserializer = new DataContractJsonSerializer(typeof(T));
-            }
-            else if (httpContentType == HttpContentTypeEnum.Xml) {
-                deserializer = new DataContractSerializer(typeof(T));
-            }
-
-            // Recupera os bytes correspondentes a string
-            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(serializedObject));
+            // Obtém um serializador para o content type definido.
+            ISerializer serializer = SerializerFactory.Create(httpContentType.ToString());
 
             // Realiza a deserialização da string para o objeto informado
-            T obj = (T)deserializer.ReadObject(ms);
+            T obj = serializer.DeserializeObject<T>(serializedObject);
 
             return obj;
         }
 
         #endregion
+
+        private string GetContentTypeFromEnum(HttpContentTypeEnum httpContentType) {
+
+            switch (httpContentType) {
+                case HttpContentTypeEnum.Xml:
+                    return "application/xml";
+                default:
+                    return "application/json";
+            }
+        }
     }
 }

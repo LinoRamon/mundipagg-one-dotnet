@@ -1,7 +1,6 @@
-﻿using GatewayApiClient.EnumTypes;
+﻿using System;
 using GatewayApiClient.ResourceClients;
 using GatewayApiClient.ResourceClients.Interfaces;
-using System;
 
 namespace GatewayApiClient {
 
@@ -26,20 +25,12 @@ namespace GatewayApiClient {
 
         #endregion
 
-        public GatewayServiceClient(Guid merchantKey) : this(merchantKey, PlatformEnvironment.Production, HttpContentTypeEnum.Json, null) { }
+        public GatewayServiceClient(Guid merchantKey) : this(merchantKey, null) { }
 
-        public GatewayServiceClient(Guid merchantKey, Uri hostUri) : this(merchantKey, PlatformEnvironment.Production, HttpContentTypeEnum.Json, hostUri) { }
+        public GatewayServiceClient(Guid merchantKey, Uri hostUri) {
 
-        public GatewayServiceClient() : this(Guid.Empty, PlatformEnvironment.Production) { }
-
-        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment) : this(merchantKey, environment, HttpContentTypeEnum.Json, null) { }
-
-        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType) : this(merchantKey, environment, httpContentType, null) { }
-
-        public GatewayServiceClient(Guid merchantKey, PlatformEnvironment environment, HttpContentTypeEnum httpContentType, Uri hostUri) {
-
-            this._sale = new SaleResource(merchantKey, environment, httpContentType, hostUri);
-            this._creditCard = new CreditCardResource(merchantKey, environment, httpContentType, hostUri);
+            this._sale = new SaleResource(merchantKey, hostUri);
+            this._creditCard = new CreditCardResource(merchantKey, hostUri);
         }
     }
 }
