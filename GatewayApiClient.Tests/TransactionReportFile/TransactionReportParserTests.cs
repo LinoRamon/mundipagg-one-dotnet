@@ -11,7 +11,7 @@ namespace GatewayApiClient.Tests.TransactionReportFile {
     [TestClass]
     public class TransactionReportParserTests : BaseTests {
         #region HostUri
-        private readonly Uri _hostUri = new Uri("https://apisandbox.mundipaggone.com:8443/");
+        private readonly Uri _hostUri = new Uri("https://apisandbox.mundipaggone.com/");
         #endregion
 
         [TestMethod]
