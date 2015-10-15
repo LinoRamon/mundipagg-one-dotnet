@@ -41,7 +41,7 @@ namespace GatewayApiClient.ResourceClients {
 
         private string GetServiceUri() {
 
-            return ConfigurationUtility.GetConfigurationString("GatewayService_HostUri");
+            return ConfigurationUtility.GetConfigurationString("HostUri");
         }
     }
 }

@@ -62,6 +62,17 @@ namespace GatewayApiClient.Tests {
         }
 
         [TestMethod]
+        public void ItShouldCreateCreditCardSaleUsingConfiguredMerchantKey() {
+            // Cria o client que enviará a transação.
+            IGatewayServiceClient serviceClient = new GatewayServiceClient();
+
+            // Autoriza a transação de cartão de crédito e recebe a resposta do gateway.
+            HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
+
+            Assert.AreEqual(HttpStatusCode.Created, httpResponse.HttpStatusCode);
+        }
+
+        [TestMethod]
         public void ItShouldCreateBoletoSale() {
             // Cria o client que enviará a transação.
             IGatewayServiceClient serviceClient = new GatewayServiceClient(MerchantKey, _endpoint);
