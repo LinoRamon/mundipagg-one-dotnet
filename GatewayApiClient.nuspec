@@ -9,12 +9,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MundiPagg Gateway Client</description>
     <releaseNotes>
-    Implemented TransactionReportFile parser and client.
-    Implemented Notification parser.
-    Removed xml support from the transactional api client.
-    Removed RequestKey field from all requests.
-    Added test project.
-    Removed PlatformEnvironment configuration from the sdk.
+Implemented TransactionReportFile parser and client.
+Implemented Notification parser.
+Removed xml support from the transactional api client.
+Removed RequestKey field from all requests.
+Removed PlatformEnvironment configuration from the sdk.
     </releaseNotes>
     <copyright>MundiPagg 2015</copyright>
     <tags>MundiPagg Credit Card Payment Boleto Gateway Transaction</tags>
