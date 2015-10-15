@@ -7,7 +7,7 @@ namespace GatewayApiClient.Utility {
 
         public static string GetConfigurationString(string configurationName) {
 
-            configurationName = "GatewayService." + configurationName;
+            configurationName = string.Concat("GatewayService.", configurationName);
 
             string configurationValue = ConfigurationManager.AppSettings[configurationName];
             if (string.IsNullOrWhiteSpace(configurationValue)) { throw new ConfigurationErrorsException("Missing configuration: " + configurationName); }

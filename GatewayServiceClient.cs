@@ -25,6 +25,7 @@ namespace GatewayApiClient {
 
         #endregion
 
+        public GatewayServiceClient() : this(Guid.Empty, null) { }
         public GatewayServiceClient(Guid merchantKey) : this(merchantKey, null) { }
 
         public GatewayServiceClient(Guid merchantKey, Uri hostUri) {

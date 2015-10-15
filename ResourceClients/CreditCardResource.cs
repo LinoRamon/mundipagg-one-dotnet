@@ -1,14 +1,15 @@
-﻿using GatewayApiClient.DataContracts;
+﻿using System;
+using System.Collections.Specialized;
+using GatewayApiClient.DataContracts;
 using GatewayApiClient.EnumTypes;
 using GatewayApiClient.ResourceClients.Interfaces;
 using GatewayApiClient.Utility;
-using System;
-using System.Collections.Specialized;
 
 namespace GatewayApiClient.ResourceClients {
 
     public class CreditCardResource : BaseResource, ICreditCardResource {
 
+        public CreditCardResource() : this(Guid.Empty, null) { }
         public CreditCardResource(Guid merchantKey) : this(merchantKey, null) { }
         public CreditCardResource(Guid merchantKey, Uri hostUri) : base(merchantKey, "/CreditCard", hostUri) { }
 

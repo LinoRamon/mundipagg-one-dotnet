@@ -10,6 +10,7 @@ namespace GatewayApiClient.ResourceClients {
 
     public class SaleResource : BaseResource, ISaleResource {
 
+        public SaleResource() : this(Guid.Empty, null) { }
         public SaleResource(Guid merchantKey) : this(merchantKey, null) { }
         public SaleResource(Guid merchantKey, Uri hostUri) : base(merchantKey, "/Sale", hostUri) { }
 
@@ -25,7 +26,7 @@ namespace GatewayApiClient.ResourceClients {
             // Configura MerchantKey e o header
             NameValueCollection header = new NameValueCollection();
             header.Add("MerchantKey", this.MerchantKey.ToString());
-            
+
             // Envia requisição
             return this.HttpUtility.SubmitRequest<CreateSaleRequest, CreateSaleResponse>(createSaleRequest,
                 string.Concat(this.HostUri, this.ResourceName), HttpVerbEnum.Post, HttpContentTypeEnum.Json, header);
@@ -125,7 +126,7 @@ namespace GatewayApiClient.ResourceClients {
             return this.Manage(manageOperation, manageSaleRequest);
         }
 
-        
+
         /// <summary>
         /// Gerencia uma coleção de transações de cartão de crédito.
         /// </summary>
