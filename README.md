@@ -10,40 +10,41 @@ MundiPaggV2 .NET Integration library.
 
 ## Getting started
 
-```c#
-// Creates the credit card.
-CreditCard creditCard = new CreditCard();
-creditCard.CreditCardNumber = "4111111111111111";
-creditCard.CreditCardBrand = CreditCardBrandEnum.Visa;
-creditCard.ExpMonth = 10;
-creditCard.ExpYear = 2018;
-creditCard.SecurityCode = "123";
-creditCard.HolderName = "Somebody";
+Add this to your App.config or Web.config file.
+```xml
+<appSettings>
+    <add key="GatewayService.MerchantKey" value="85328786-8BA6-420F-9948-5352F5A183EB" />
+    <add key="GatewayService.HostUri" value="https://sandbox.mundipaggone.com" />
+</appSettings>
+```
 
-// Create the transaction.
-CreateSaleRequest createSaleRequest = new CreateSaleRequest();
-createSaleRequest.CreditCardTransactionCollection = new Collection<CreditCardTransaction>();
-createSaleRequest.CreditCardTransactionCollection.Add(new CreditCardTransaction() {
+Code:
+```c#
+// Creates the credit card transaction.
+var transaction = new CreditCardTransaction() {
     AmountInCents = 100,
-    CreditCard = creditCard,
-    Options = new CreditCardTransactionOptions() { PaymentMethodCode = 1 } // Simulator
-});
+    CreditCard = new CreditCard() {
+        CreditCardNumber = "4111111111111111",
+        CreditCardBrand = CreditCardBrandEnum.Visa,
+        ExpMonth = 10,
+        ExpYear = 2018,
+        SecurityCode = "123",
+        HolderName = "Smith"
+    }
+};
 
 try {
 
-    Guid merchantKey = Guid.Parse("00000000-0000-0000-0000-000000000000"); // Put your MerchantKey here.
-    Uri endpoint = new Uri("https://stagingv2.mundipaggone.com");
-
     // Creates the client that will send the transaction.
-    IGatewayServiceClient serviceClient = new GatewayServiceClient(merchantKey, PlatformEnvironment.Sandbox, HttpContentTypeEnum.Json, endpoint);
+    var serviceClient = new GatewayServiceClient();
 
     // Authorizes the credit card transaction and returns the gateway response.
-    HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(createSaleRequest);
+    var httpResponse = serviceClient.Sale.Create(transaction);
 
     // API response code
     Console.WriteLine("Status: {0}", httpResponse.HttpStatusCode);
 
-    CreateSaleResponse createSaleResponse = httpResponse.Response;
+    var createSaleResponse = httpResponse.Response;
     if (httpResponse.HttpStatusCode == HttpStatusCode.Created) {
         foreach (var creditCardTransaction in createSaleResponse.CreditCardTransactionResultCollection) {
             Console.WriteLine(creditCardTransaction.AcquirerMessage);
