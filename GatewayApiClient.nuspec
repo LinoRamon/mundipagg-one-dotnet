@@ -2,18 +2,16 @@
 <package >
   <metadata>
     <id>MundiPagg.Gateway.Client</id>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <authors>MundiPagg</authors>
     <owners>MundiPagg</owners>
     <projectUrl>https://github.com/mundipagg/mundipagg-one-dotnet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MundiPagg Gateway Client</description>
     <releaseNotes>
-Implemented TransactionReportFile parser and client.
-Implemented Notification parser.
-Removed xml support from the transactional api client.
-Removed RequestKey field from all requests.
-Removed PlatformEnvironment configuration from the sdk.
+Implementing custom headers support in GatewayServiceClient.
+Adding new overloads for the method Create, with OrderReference parameter.
+Updating contracts.
     </releaseNotes>
     <copyright>MundiPagg 2015</copyright>
     <tags>MundiPagg Credit Card Payment Boleto Gateway Transaction</tags>
