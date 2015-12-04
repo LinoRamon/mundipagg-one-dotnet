@@ -1,19 +1,14 @@
-﻿using GatewayApiClient.DataContracts;
+﻿using System;
+using System.Collections.ObjectModel;
+using GatewayApiClient.DataContracts;
 using GatewayApiClient.EnumTypes;
 using GatewayApiClient.Utility;
-using System;
-using System.Collections.ObjectModel;
 
 namespace GatewayApiClient.ResourceClients.Interfaces {
 
     public interface ISaleResource : IBaseResource {
 
-        /// <summary>
-        /// Cria uma transação de boleto
-        /// </summary>
-        /// <param name="boletoTransaction">Dados da transação de boleto</param>
-        /// <returns></returns>
-        HttpResponse<CreateSaleResponse> Create(BoletoTransaction boletoTransaction);
+        #region Create
 
         /// <summary>
         /// Cria uma venda, contendo transações de boleto e/ou cartão de crédito
@@ -21,6 +16,29 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         /// <param name="createSaleRequest">Dados da venda</param>
         /// <returns></returns>
         HttpResponse<CreateSaleResponse> Create(CreateSaleRequest createSaleRequest);
+
+        /// <summary>
+        /// Cria uma venda com uma coleção de transações de cartão de crédito
+        /// </summary>
+        /// <param name="creditCardTransactionCollection">Coleção de transações de cartão de crédito</param>
+        /// <param name="orderReference">Identificação do pedido na loja</param>
+        /// <returns></returns>
+        HttpResponse<CreateSaleResponse> Create(Collection<CreditCardTransaction> creditCardTransactionCollection, string orderReference);
+
+        /// <summary>
+        /// Cria uma transação de cartão de crédito
+        /// </summary>
+        /// <param name="creditCardTransaction">Dados da transação de cartão de crédito</param>
+        /// <param name="orderReference">Identificação do pedido na loja</param>
+        /// <returns></returns>
+        HttpResponse<CreateSaleResponse> Create(CreditCardTransaction creditCardTransaction, string orderReference);
+
+        /// <summary>
+        /// Cria uma venda com uma coleção de transações de cartão de crédito
+        /// </summary>
+        /// <param name="creditCardTransactionCollection">Coleção de transações de cartão de crédito</param>
+        /// <returns></returns>
+        HttpResponse<CreateSaleResponse> Create(Collection<CreditCardTransaction> creditCardTransactionCollection);
 
         /// <summary>
         /// Cria uma transação de cartão de crédito
@@ -33,15 +51,35 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         /// Cria uma venda com uma coleção de boletos
         /// </summary>
         /// <param name="boletoTransactionCollection">Coleção de boletos</param>
+        /// <param name="orderReference">Identificação do pedido na loja</param>
+        /// <returns></returns>
+        HttpResponse<CreateSaleResponse> Create(Collection<BoletoTransaction> boletoTransactionCollection, string orderReference);
+
+        /// <summary>
+        /// Cria uma transação de boleto
+        /// </summary>
+        /// <param name="boletoTransaction">Dados da transação de boleto</param>
+        /// <param name="orderReference">Identificação do pedido na loja</param>
+        /// <returns></returns>
+        HttpResponse<CreateSaleResponse> Create(BoletoTransaction boletoTransaction, string orderReference);
+
+        /// <summary>
+        /// Cria uma venda com uma coleção de boletos
+        /// </summary>
+        /// <param name="boletoTransactionCollection">Coleção de boletos</param>
         /// <returns></returns>
         HttpResponse<CreateSaleResponse> Create(Collection<BoletoTransaction> boletoTransactionCollection);
 
         /// <summary>
-        /// Cria uma venda com uma coleção de transações de cartão de crédito
+        /// Cria uma transação de boleto
         /// </summary>
-        /// <param name="creditCardTransactionCollection">Coleção de transações de cartão de crédito</param>
+        /// <param name="boletoTransaction">Dados da transação de boleto</param>
         /// <returns></returns>
-        HttpResponse<CreateSaleResponse> Create(Collection<CreditCardTransaction> creditCardTransactionCollection);
+        HttpResponse<CreateSaleResponse> Create(BoletoTransaction boletoTransaction);
+
+        #endregion
+
+        #region Manage
 
         /// <summary>
         /// Gerencia uam venda
@@ -60,15 +98,6 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey);
 
         /// <summary>
-        /// Gerencia uma transação de cartão de crédito específica
-        /// </summary>
-        /// <param name="manageOperation">Operação que deverá ser executada (captura ou cancelamento)</param>
-        /// <param name="orderKey">Chave do pedido</param>
-        /// <param name="manageCreditCardTransaction">Dados da transação que será gerenciada</param>
-        /// <returns></returns>
-        HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, ManageCreditCardTransaction manageCreditCardTransaction);
-
-        /// <summary>
         /// Gerencia uma coleção de transações de cartão de crédito.
         /// </summary>
         /// <param name="manageOperation">Operação que deverá ser executada (captura ou cancelamento)</param>
@@ -78,46 +107,17 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, Collection<ManageCreditCardTransaction> manageCreditCardTransactionCollection);
 
         /// <summary>
-        /// Consulta uma transação de boleto
+        /// Gerencia uma transação de cartão de crédito específica
         /// </summary>
-        /// <param name="boletoTransactionKey">Chave da transação de boleto</param>
+        /// <param name="manageOperation">Operação que deverá ser executada (captura ou cancelamento)</param>
+        /// <param name="orderKey">Chave do pedido</param>
+        /// <param name="manageCreditCardTransaction">Dados da transação que será gerenciada</param>
         /// <returns></returns>
-        HttpResponse<QuerySaleResponse> QueryBoletoTransaction(Guid boletoTransactionKey);
+        HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, ManageCreditCardTransaction manageCreditCardTransaction);
 
-        /// <summary>
-        /// Consulta uma transação de boleto
-        /// </summary>
-        /// <param name="boletoTransactionReference">Identificador da transação no sistema da loja</param>
-        /// <returns></returns>
-        HttpResponse<QuerySaleResponse> QueryBoletoTransaction(string boletoTransactionReference);
+        #endregion
 
-        /// <summary>
-        /// Consulta uma transação de cartão de crédito
-        /// </summary>
-        /// <param name="creditCardTransactionKey">Chave da transação de cartão de crédito</param>
-        /// <returns></returns>
-        HttpResponse<QuerySaleResponse> QueryCreditCardTransaction(Guid creditCardTransactionKey);
-
-        /// <summary>
-        /// Consulta uma transação de cartão de crédito
-        /// </summary>
-        /// <param name="creditCardTransactionReference">Identificador da transação no sistema da loja</param>
-        /// <returns></returns>
-        HttpResponse<QuerySaleResponse> QueryCreditCardTransaction(string creditCardTransactionReference);
-
-        /// <summary>
-        /// Consulta uma venda
-        /// </summary>
-        /// <param name="orderKey">Chave da loja</param>
-        /// <returns></returns>
-        HttpResponse<QuerySaleResponse> QueryOrder(Guid orderKey);
-
-        /// <summary>
-        /// Consulta uma venda
-        /// </summary>
-        /// <param name="orderReference">Identificador do pedido no sistema da loja</param>
-        /// <returns></returns>
-        HttpResponse<QuerySaleResponse> QueryOrder(string orderReference);
+        #region Retry
 
         /// <summary>
         /// Retenta as transações de cartão de crédito não autorizadas de uma venda
@@ -134,6 +134,14 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         HttpResponse<RetrySaleResponse> Retry(Guid orderKey);
 
         /// <summary>
+        /// Retenta uma coleção de transações de cartão de crédito não autorizadas
+        /// </summary>
+        /// <param name="orderKey">Chave do pedido</param>
+        /// <param name="retrySaleCreditCardTransactionCollection">Coleção de transações que serão retentadas</param>
+        /// <returns></returns>
+        HttpResponse<RetrySaleResponse> Retry(Guid orderKey, Collection<RetrySaleCreditCardTransaction> retrySaleCreditCardTransactionCollection);
+
+        /// <summary>
         /// Retenta uma transação de cartão de crédito não autorizada
         /// </summary>
         /// <param name="orderKey">Chave do pedido</param>
@@ -141,12 +149,52 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         /// <returns></returns>
         HttpResponse<RetrySaleResponse> Retry(Guid orderKey, RetrySaleCreditCardTransaction retrySaleCreditCardTransaction);
 
+        #endregion
+
+        #region Query
+
         /// <summary>
-        /// Retenta uma coleção de transações de cartão de crédito não autorizadas
+        /// Consulta uma venda
         /// </summary>
-        /// <param name="orderKey">Chave do pedido</param>
-        /// <param name="retrySaleCreditCardTransactionCollection">Coleção de transações que serão retentadas</param>
+        /// <param name="orderKey">Chave da loja</param>
         /// <returns></returns>
-        HttpResponse<RetrySaleResponse> Retry(Guid orderKey, Collection<RetrySaleCreditCardTransaction> retrySaleCreditCardTransactionCollection);
+        HttpResponse<QuerySaleResponse> QueryOrder(Guid orderKey);
+
+        /// <summary>
+        /// Consulta uma venda
+        /// </summary>
+        /// <param name="orderReference">Identificador do pedido no sistema da loja</param>
+        /// <returns></returns>
+        HttpResponse<QuerySaleResponse> QueryOrder(string orderReference);
+
+        /// <summary>
+        /// Consulta uma transação de cartão de crédito
+        /// </summary>
+        /// <param name="creditCardTransactionKey">Chave da transação de cartão de crédito</param>
+        /// <returns></returns>
+        HttpResponse<QuerySaleResponse> QueryCreditCardTransaction(Guid creditCardTransactionKey);
+
+        /// <summary>
+        /// Consulta uma transação de cartão de crédito
+        /// </summary>
+        /// <param name="creditCardTransactionReference">Identificador da transação no sistema da loja</param>
+        /// <returns></returns>
+        HttpResponse<QuerySaleResponse> QueryCreditCardTransaction(string creditCardTransactionReference);
+
+        /// <summary>
+        /// Consulta uma transação de boleto
+        /// </summary>
+        /// <param name="boletoTransactionKey">Chave da transação de boleto</param>
+        /// <returns></returns>
+        HttpResponse<QuerySaleResponse> QueryBoletoTransaction(Guid boletoTransactionKey);
+
+        /// <summary>
+        /// Consulta uma transação de boleto
+        /// </summary>
+        /// <param name="boletoTransactionReference">Identificador da transação no sistema da loja</param>
+        /// <returns></returns>
+        HttpResponse<QuerySaleResponse> QueryBoletoTransaction(string boletoTransactionReference);
+
+        #endregion
     }
 }

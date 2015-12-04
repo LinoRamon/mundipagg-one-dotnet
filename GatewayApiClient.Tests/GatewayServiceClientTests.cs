@@ -47,6 +47,19 @@ namespace GatewayApiClient.Tests {
                 }
             }
         };
+
+        private readonly CreditCardTransaction _createSingleCreditCardTransaction = new CreditCardTransaction {
+            CreditCard = new CreditCard {
+                CreditCardNumber = "4111111111111111",
+                CreditCardBrand = CreditCardBrandEnum.Visa,
+                ExpMonth = 10,
+                ExpYear = 2018,
+                SecurityCode = "123",
+                HolderName = "LUKE SKYWALKER"
+            },
+            AmountInCents = 100,
+            Options = new CreditCardTransactionOptions { PaymentMethodCode = 1 }
+        };
         #endregion
 
 
@@ -59,6 +72,21 @@ namespace GatewayApiClient.Tests {
             HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
 
             Assert.AreEqual(HttpStatusCode.Created, httpResponse.HttpStatusCode);
+        }
+
+        [TestMethod]
+        public void ItShouldCreateCreditCardSaleWithOrderReference() {
+            // Cria o client que enviará a transação.
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
+
+            // Identificação do pedido na loja.
+            string orderReference = Guid.NewGuid().ToString("n");
+
+            // Autoriza a transação de cartão de crédito e recebe a resposta do gateway.
+            HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(this._createSingleCreditCardTransaction, orderReference);
+
+            Assert.AreEqual(HttpStatusCode.Created, httpResponse.HttpStatusCode);
+            Assert.AreEqual(orderReference, httpResponse.Response.OrderResult.OrderReference);
         }
 
         [TestMethod]

@@ -34,15 +34,45 @@ namespace GatewayApiClient.ResourceClients {
         /// Cria uma venda com uma coleção de transações de cartão de crédito
         /// </summary>
         /// <param name="creditCardTransactionCollection">Coleção de transações de cartão de crédito</param>
+        /// <param name="orderReference">Identificação do pedido na loja</param>
         /// <returns></returns>
-        public HttpResponse<CreateSaleResponse> Create(Collection<CreditCardTransaction> creditCardTransactionCollection) {
+        public HttpResponse<CreateSaleResponse> Create(Collection<CreditCardTransaction> creditCardTransactionCollection, string orderReference) {
 
             CreateSaleRequest createSaleRequest = new CreateSaleRequest();
             createSaleRequest.CreditCardTransactionCollection = creditCardTransactionCollection;
             // Se não for informado o comprador nem o carrinho de compras não será possível utilizar o serviço de anti fraude.
             createSaleRequest.Options = new SaleOptions() { IsAntiFraudEnabled = false };
+            if (string.IsNullOrWhiteSpace(orderReference) == false) {
+                createSaleRequest.Order = new Order() {
+                    OrderReference = orderReference
+                };
+            }
 
             return this.Create(createSaleRequest);
+        }
+
+        /// <summary>
+        /// Cria uma transação de cartão de crédito
+        /// </summary>
+        /// <param name="creditCardTransaction">Dados da transação de cartão de crédito</param>
+        /// <param name="orderReference">Identificação do pedido na loja</param>
+        /// <returns></returns>
+        public HttpResponse<CreateSaleResponse> Create(CreditCardTransaction creditCardTransaction, string orderReference) {
+
+            Collection<CreditCardTransaction> creditCardTransactionCollection = new Collection<CreditCardTransaction>();
+            creditCardTransactionCollection.Add(creditCardTransaction);
+
+            return this.Create(creditCardTransactionCollection, orderReference);
+        }
+
+        /// <summary>
+        /// Cria uma venda com uma coleção de transações de cartão de crédito
+        /// </summary>
+        /// <param name="creditCardTransactionCollection">Coleção de transações de cartão de crédito</param>
+        /// <returns></returns>
+        public HttpResponse<CreateSaleResponse> Create(Collection<CreditCardTransaction> creditCardTransactionCollection) {
+
+            return this.Create(creditCardTransactionCollection, null);
         }
 
         /// <summary>
@@ -52,12 +82,44 @@ namespace GatewayApiClient.ResourceClients {
         /// <returns></returns>
         public HttpResponse<CreateSaleResponse> Create(CreditCardTransaction creditCardTransaction) {
 
-            Collection<CreditCardTransaction> creditCardTransactionCollection = new Collection<CreditCardTransaction>();
-            creditCardTransactionCollection.Add(creditCardTransaction);
-
-            return this.Create(creditCardTransactionCollection);
+            return this.Create(creditCardTransaction, null);
         }
 
+        /// /// <summary>
+        /// Cria uma venda com uma coleção de boletos
+        /// </summary>
+        /// <param name="boletoTransactionCollection">Coleção de boletos</param>
+        /// <param name="orderReference">Identificação do pedido na loja</param>
+        /// <returns></returns>
+        public HttpResponse<CreateSaleResponse> Create(Collection<BoletoTransaction> boletoTransactionCollection, string orderReference) {
+
+            CreateSaleRequest createSaleRequest = new CreateSaleRequest();
+            createSaleRequest.BoletoTransactionCollection = boletoTransactionCollection;
+            // Se não for informado o comprador nem o carrinho de compras não será possível utilizar o serviço de anti fraude.
+            createSaleRequest.Options = new SaleOptions() { IsAntiFraudEnabled = false };
+            if (string.IsNullOrWhiteSpace(orderReference) == false) {
+                createSaleRequest.Order = new Order() {
+                    OrderReference = orderReference
+                };
+            }
+
+            return this.Create(createSaleRequest);
+        }
+
+        /// <summary>
+        /// Cria uma transação de boleto
+        /// </summary>
+        /// <param name="boletoTransaction">Dados da transação de boleto</param>
+        /// <param name="orderReference">Identificação do pedido na loja</param>
+        /// <returns></returns>
+        public HttpResponse<CreateSaleResponse> Create(BoletoTransaction boletoTransaction, string orderReference) {
+
+            Collection<BoletoTransaction> boletoTransactionCollection = new Collection<BoletoTransaction>();
+            boletoTransactionCollection.Add(boletoTransaction);
+
+            return this.Create(boletoTransactionCollection, orderReference);
+        }
+        
         /// /// <summary>
         /// Cria uma venda com uma coleção de boletos
         /// </summary>
@@ -65,12 +127,7 @@ namespace GatewayApiClient.ResourceClients {
         /// <returns></returns>
         public HttpResponse<CreateSaleResponse> Create(Collection<BoletoTransaction> boletoTransactionCollection) {
 
-            CreateSaleRequest createSaleRequest = new CreateSaleRequest();
-            createSaleRequest.BoletoTransactionCollection = boletoTransactionCollection;
-            // Se não for informado o comprador nem o carrinho de compras não será possível utilizar o serviço de anti fraude.
-            createSaleRequest.Options = new SaleOptions() { IsAntiFraudEnabled = false };
-
-            return this.Create(createSaleRequest);
+            return this.Create(boletoTransactionCollection, null);
         }
 
         /// <summary>
@@ -80,10 +137,7 @@ namespace GatewayApiClient.ResourceClients {
         /// <returns></returns>
         public HttpResponse<CreateSaleResponse> Create(BoletoTransaction boletoTransaction) {
 
-            Collection<BoletoTransaction> boletoTransactionCollection = new Collection<BoletoTransaction>();
-            boletoTransactionCollection.Add(boletoTransaction);
-
-            return this.Create(boletoTransactionCollection);
+            return this.Create(boletoTransaction, null);
         }
 
         #endregion
