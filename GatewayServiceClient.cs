@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using GatewayApiClient.ResourceClients;
 using GatewayApiClient.ResourceClients.Interfaces;
 
@@ -25,13 +26,13 @@ namespace GatewayApiClient {
 
         #endregion
 
-        public GatewayServiceClient() : this(Guid.Empty, null) { }
-        public GatewayServiceClient(Guid merchantKey) : this(merchantKey, null) { }
+        public GatewayServiceClient() : this(Guid.Empty, null, null) { }
+        public GatewayServiceClient(Guid merchantKey) : this(merchantKey, null, null) { }
+        public GatewayServiceClient(Guid merchantKey, Uri hostUri) : this(merchantKey, hostUri, null) { }
+        public GatewayServiceClient(Guid merchantKey, Uri hostUri, NameValueCollection customHeaders) {
 
-        public GatewayServiceClient(Guid merchantKey, Uri hostUri) {
-
-            this._sale = new SaleResource(merchantKey, hostUri);
-            this._creditCard = new CreditCardResource(merchantKey, hostUri);
+            this._sale = new SaleResource(merchantKey, hostUri, customHeaders);
+            this._creditCard = new CreditCardResource(merchantKey, hostUri, customHeaders);
         }
     }
 }

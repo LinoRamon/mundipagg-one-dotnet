@@ -9,9 +9,7 @@ namespace GatewayApiClient.ResourceClients {
 
     public class CreditCardResource : BaseResource, ICreditCardResource {
 
-        public CreditCardResource() : this(Guid.Empty, null) { }
-        public CreditCardResource(Guid merchantKey) : this(merchantKey, null) { }
-        public CreditCardResource(Guid merchantKey, Uri hostUri) : base(merchantKey, "/CreditCard", hostUri) { }
+        public CreditCardResource(Guid merchantKey, Uri hostUri, NameValueCollection customHeaders) : base(merchantKey, "/CreditCard", hostUri, customHeaders) { }
 
         public HttpResponse<GetInstantBuyDataResponse> GetInstantBuyData(Guid instantBuyKey) {
             return this.GetInstantBuyDataImplementation(instantBuyKey, string.Empty);
@@ -29,10 +27,10 @@ namespace GatewayApiClient.ResourceClients {
 
             HttpVerbEnum httpVerb = HttpVerbEnum.Get;
 
-            NameValueCollection header = new NameValueCollection();
-            header.Add("MerchantKey", this.MerchantKey.ToString());
+            NameValueCollection headers = this.GetHeaders();
+            headers.Add("MerchantKey", this.MerchantKey.ToString());
 
-            return this.HttpUtility.SubmitRequest<GetInstantBuyDataResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, HttpContentTypeEnum.Json, header);
+            return this.HttpUtility.SubmitRequest<GetInstantBuyDataResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, HttpContentTypeEnum.Json, headers);
         }
     }
 }

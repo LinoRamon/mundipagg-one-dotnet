@@ -10,9 +10,7 @@ namespace GatewayApiClient.ResourceClients {
 
     public class SaleResource : BaseResource, ISaleResource {
 
-        public SaleResource() : this(Guid.Empty, null) { }
-        public SaleResource(Guid merchantKey) : this(merchantKey, null) { }
-        public SaleResource(Guid merchantKey, Uri hostUri) : base(merchantKey, "/Sale", hostUri) { }
+        public SaleResource(Guid merchantKey, Uri hostUri, NameValueCollection customHeaders) : base(merchantKey, "/Sale", hostUri, customHeaders) { }
 
         #region Create
 
@@ -24,12 +22,12 @@ namespace GatewayApiClient.ResourceClients {
         public HttpResponse<CreateSaleResponse> Create(CreateSaleRequest createSaleRequest) {
 
             // Configura MerchantKey e o header
-            NameValueCollection header = new NameValueCollection();
-            header.Add("MerchantKey", this.MerchantKey.ToString());
+            NameValueCollection headers = this.GetHeaders();
+            headers.Add("MerchantKey", this.MerchantKey.ToString());
 
             // Envia requisição
             return this.HttpUtility.SubmitRequest<CreateSaleRequest, CreateSaleResponse>(createSaleRequest,
-                string.Concat(this.HostUri, this.ResourceName), HttpVerbEnum.Post, HttpContentTypeEnum.Json, header);
+                string.Concat(this.HostUri, this.ResourceName), HttpVerbEnum.Post, HttpContentTypeEnum.Json, headers);
         }
 
         /// <summary>
@@ -104,12 +102,12 @@ namespace GatewayApiClient.ResourceClients {
             string actionName = manageOperation.ToString();
 
             // Configura MerchantKey e o header
-            NameValueCollection header = new NameValueCollection();
-            header.Add("MerchantKey", this.MerchantKey.ToString());
+            NameValueCollection headers = this.GetHeaders();
+            headers.Add("MerchantKey", this.MerchantKey.ToString());
 
             // Envia requisição
             return this.HttpUtility.SubmitRequest<ManageSaleRequest, ManageSaleResponse>(manageSaleRequest,
-                string.Concat(this.HostUri, this.ResourceName, "/", actionName), HttpVerbEnum.Post, HttpContentTypeEnum.Json, header);
+                string.Concat(this.HostUri, this.ResourceName, "/", actionName), HttpVerbEnum.Post, HttpContentTypeEnum.Json, headers);
         }
 
         /// <summary>
@@ -165,12 +163,12 @@ namespace GatewayApiClient.ResourceClients {
         public HttpResponse<RetrySaleResponse> Retry(RetrySaleRequest retrySaleRequest) {
 
             // Configura MerchantKey e o header
-            NameValueCollection header = new NameValueCollection();
-            header.Add("MerchantKey", this.MerchantKey.ToString());
+            NameValueCollection headers = this.GetHeaders();
+            headers.Add("MerchantKey", this.MerchantKey.ToString());
 
             // Envia requisição
             return this.HttpUtility.SubmitRequest<RetrySaleRequest, RetrySaleResponse>(retrySaleRequest,
-                string.Concat(this.HostUri, this.ResourceName, "/Retry"), HttpVerbEnum.Post, HttpContentTypeEnum.Json, header);
+                string.Concat(this.HostUri, this.ResourceName, "/Retry"), HttpVerbEnum.Post, HttpContentTypeEnum.Json, headers);
         }
 
         public HttpResponse<RetrySaleResponse> Retry(Guid orderKey) {
@@ -268,10 +266,10 @@ namespace GatewayApiClient.ResourceClients {
 
             HttpVerbEnum httpVerb = HttpVerbEnum.Get;
 
-            NameValueCollection header = new NameValueCollection();
-            header.Add("MerchantKey", this.MerchantKey.ToString());
+            NameValueCollection headers = this.GetHeaders();
+            headers.Add("MerchantKey", this.MerchantKey.ToString());
 
-            return this.HttpUtility.SubmitRequest<QuerySaleResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, HttpContentTypeEnum.Json, header);
+            return this.HttpUtility.SubmitRequest<QuerySaleResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, HttpContentTypeEnum.Json, headers);
         }
 
         #endregion

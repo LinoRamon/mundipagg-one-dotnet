@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using GatewayApiClient.ResourceClients.Interfaces;
 using GatewayApiClient.Utility;
 
@@ -14,12 +15,11 @@ namespace GatewayApiClient.ResourceClients {
         private string _hostUri;
         protected string HostUri { get { return _hostUri; } }
 
+        private NameValueCollection _customHeader = null;
+
         internal HttpUtility HttpUtility { get; set; }
 
-        protected BaseResource(Guid merchantKey, string resourceName)
-            : this(merchantKey, resourceName, null) { }
-
-        protected BaseResource(Guid merchantKey, string resourceName, Uri hostUri) {
+        protected BaseResource(Guid merchantKey, string resourceName, Uri hostUri, NameValueCollection customHeaders) {
 
             if (merchantKey == Guid.Empty) {
                 merchantKey = ConfigurationUtility.GetConfigurationKey("MerchantKey");
@@ -37,11 +37,26 @@ namespace GatewayApiClient.ResourceClients {
                 this._hostUri = this.GetServiceUri();
             }
             this._resourceName = resourceName;
+
+            this._customHeader = customHeaders;
         }
 
         private string GetServiceUri() {
 
             return ConfigurationUtility.GetConfigurationString("HostUri");
+        }
+
+        protected NameValueCollection GetHeaders() {
+
+            NameValueCollection headers = new NameValueCollection();
+
+            if (this._customHeader != null) {
+                foreach (string headerName in this._customHeader) {
+                    headers.Add(headerName, this._customHeader[headerName]);
+                }
+            }
+
+            return headers;
         }
     }
 }

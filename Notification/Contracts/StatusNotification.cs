@@ -4,7 +4,6 @@ using GatewayApiClient.Notification.Contracts.Enum;
 
 namespace GatewayApiClient.Notification.Contracts {
 
-    //[DataContract(Name = "StatusNotification", Namespace = "http://schemas.datacontract.org/2004/07/MundiPagg.NotificationService.DataContract")]
     [DataContract(Name = "StatusNotification", Namespace = "")]
     public class StatusNotification {
         [DataMember(Order = 0)]

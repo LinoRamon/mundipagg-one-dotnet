@@ -53,7 +53,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCreateCreditCardSale() {
             // Cria o client que enviará a transação.
-            IGatewayServiceClient serviceClient = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Autoriza a transação de cartão de crédito e recebe a resposta do gateway.
             HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
@@ -64,7 +64,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCreateCreditCardSaleUsingConfiguredMerchantKey() {
             // Cria o client que enviará a transação.
-            IGatewayServiceClient serviceClient = new GatewayServiceClient();
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Autoriza a transação de cartão de crédito e recebe a resposta do gateway.
             HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
@@ -75,7 +75,7 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCreateBoletoSale() {
             // Cria o client que enviará a transação.
-            IGatewayServiceClient serviceClient = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(_createBoletoSaleRequest);
 
@@ -85,17 +85,17 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCancelATransaction() {
             // Cria o cliente para cancelar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Cria transação de cartão de crédito para ser cancelada
-            HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
 
             Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
 
             Guid orderKey = saleResponse.Response.OrderResult.OrderKey;
 
             // Cancela a transação de cartão de crédito e recebe a resposta do gateway.
-            HttpResponse<ManageSaleResponse> httpResponse = client.Sale.Manage(ManageOperationEnum.Cancel, orderKey);
+            HttpResponse<ManageSaleResponse> httpResponse = serviceClient.Sale.Manage(ManageOperationEnum.Cancel, orderKey);
 
             Assert.AreEqual(httpResponse.HttpStatusCode, HttpStatusCode.OK);
         }
@@ -103,17 +103,17 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCaptureATransaction() {
             // Cria o cliente para Capturar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Cria transação de cartão de crédito para ser capturada
-            HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
 
             Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
 
             Guid orderKey = saleResponse.Response.OrderResult.OrderKey;
 
             // Captura a transação de cartão de crédito e recebe a resposta do gateway.
-            HttpResponse<ManageSaleResponse> httpResponse = client.Sale.Manage(ManageOperationEnum.Capture, orderKey);
+            HttpResponse<ManageSaleResponse> httpResponse = serviceClient.Sale.Manage(ManageOperationEnum.Capture, orderKey);
 
             Assert.AreEqual(httpResponse.HttpStatusCode, HttpStatusCode.OK);
         }
@@ -121,17 +121,17 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldRetryATransaction() {
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Cria transação de cartão de crédito para ser retentada
-            HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
 
             Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
 
             Guid orderKey = saleResponse.Response.OrderResult.OrderKey;
 
             // Retenta a transação de cartão de crédito e recebe a resposta do gateway.
-            HttpResponse<RetrySaleResponse> httpResponse = client.Sale.Retry(orderKey);
+            HttpResponse<RetrySaleResponse> httpResponse = serviceClient.Sale.Retry(orderKey);
 
             Assert.AreEqual(httpResponse.HttpStatusCode, HttpStatusCode.OK);
         }
@@ -139,17 +139,17 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldDoQueryMethod() {
             // Cria o cliente para consultar o pedido.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Cria transação de cartão de crédito para ser consultada
-            HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
 
             Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
 
             Guid orderKey = saleResponse.Response.OrderResult.OrderKey;
 
-            // Consulta o pedido na MundiPagg.
-            HttpResponse<QuerySaleResponse> httpResponse = client.Sale.QueryOrder(orderKey);
+            // Consulta o pedido no gateway.
+            HttpResponse<QuerySaleResponse> httpResponse = serviceClient.Sale.QueryOrder(orderKey);
 
             Assert.AreEqual(httpResponse.HttpStatusCode, HttpStatusCode.OK);
         }
@@ -224,11 +224,11 @@ namespace GatewayApiClient.Tests {
             // Indica que o pedido usará anti fraude.
             saleRequest.Options.IsAntiFraudEnabled = true;
 
-            // Cria o cliente que enviará a transação para a MundiPagg.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
+            // Cria o cliente que enviará a transação para o gateway.
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Autoriza a transação de cartão de crédito e recebe a resposta do gateway.
-            HttpResponse<CreateSaleResponse> httpResponse = client.Sale.Create(saleRequest);
+            HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(saleRequest);
 
             Assert.AreEqual(HttpStatusCode.Created, httpResponse.HttpStatusCode);
         }
@@ -236,21 +236,21 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldConsultInstantBuyKey() {
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Cria transação de cartão de crédito para ser retentada
-            HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
 
             Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
 
             var instantBuyKey = saleResponse.Response.CreditCardTransactionResultCollection.Select(x => x.CreditCard.InstantBuyKey);
 
             // Obtém os dados do cartão de crédito no gateway.
-            HttpResponse<GetInstantBuyDataResponse> httpResponse = client.CreditCard.GetInstantBuyData(instantBuyKey.FirstOrDefault());
+            HttpResponse<GetInstantBuyDataResponse> httpResponse = serviceClient.CreditCard.GetInstantBuyData(instantBuyKey.FirstOrDefault());
 
             Assert.AreEqual(HttpStatusCode.OK, httpResponse.HttpStatusCode);
         }
-        
+
         [TestMethod]
         public void ItShouldConsultWithBuyerKey() {
 
@@ -266,17 +266,17 @@ namespace GatewayApiClient.Tests {
             _createCreditCardSaleRequest.Buyer = buyer;
 
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Cria transação de cartão de crédito para ser retentada
-            HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
 
             Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
 
             var buyerKey = saleResponse.Response.BuyerKey;
 
             // Obtém os dados do cartão de crédito no gateway.
-            HttpResponse<GetInstantBuyDataResponse> httpResponse = client.CreditCard.GetInstantBuyDataWithBuyerKey(buyerKey);
+            HttpResponse<GetInstantBuyDataResponse> httpResponse = serviceClient.CreditCard.GetInstantBuyDataWithBuyerKey(buyerKey);
 
             Assert.AreEqual(HttpStatusCode.OK, httpResponse.HttpStatusCode);
         }
@@ -284,10 +284,10 @@ namespace GatewayApiClient.Tests {
         [TestMethod]
         public void ItShouldCreateATransactionWithInstantBuyKey() {
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient client = new GatewayServiceClient(MerchantKey, _endpoint);
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
 
             // Cria transação de cartão de crédito para ser retentada
-            HttpResponse<CreateSaleResponse> saleResponse = client.Sale.Create(this._createCreditCardSaleRequest);
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
 
             Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
 
@@ -309,9 +309,14 @@ namespace GatewayApiClient.Tests {
             };
 
             // Faz a requisição
-            HttpResponse<CreateSaleResponse> httpResponse = client.Sale.Create(createSale);
+            HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(createSale);
 
             Assert.AreEqual(HttpStatusCode.Created, httpResponse.HttpStatusCode);
+        }
+
+        private IGatewayServiceClient GetGatewayServiceClient() {
+
+            return new GatewayServiceClient(MerchantKey, _endpoint);
         }
     }
 }
