@@ -18,7 +18,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Código de segurança do cartão - CVV
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string SecurityCode { get; set; }
     }
 }

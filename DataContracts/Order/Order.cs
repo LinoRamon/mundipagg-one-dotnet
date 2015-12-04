@@ -11,7 +11,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Identificador do pedido no sistema da loja
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string OrderReference { get; set; }
     }
 }

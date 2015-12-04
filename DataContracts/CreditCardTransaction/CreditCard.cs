@@ -10,37 +10,37 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Chave do cartão de crédito. Utilizado para identificar um cartão de crédito no gateway
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Guid InstantBuyKey { get; set; }
 
         /// <summary>
         /// Número do cartão de crédito
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string CreditCardNumber { get; set; }
 
         /// <summary>
         /// Titular do cartão
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string HolderName { get; set; }
 
         /// <summary>
         /// Código de segurança - CVV
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string SecurityCode { get; set; }
 
         /// <summary>
         /// Mês de expiração do cartão de crédito
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public int ExpMonth { get; set; }
 
         /// <summary>
         /// Ano de expiração do cartão de crédito
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public int ExpYear { get; set; }
 
         #region CreditCardBrand
@@ -48,7 +48,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Bandeira do cartão de crédito
         /// </summary>
-        [DataMember(Name = "CreditCardBrand")]
+        [DataMember(Name = "CreditCardBrand", EmitDefaultValue = false)]
         private string CreditCardBrandField {
             get {
                 if (this.CreditCardBrand == null) { return null; }
@@ -74,7 +74,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Endereço de cobrança
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public BillingAddress BillingAddress { get; set; }
     }
 }

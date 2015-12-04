@@ -195,5 +195,41 @@ namespace GatewayApiClient.DataContracts {
         /// </summary>
         [DataMember]
         public string TransactionKeyToAcquirer { get; set; }
+
+        #region CapturedDate
+
+        /// <summary>
+        /// Data da captura
+        /// </summary>
+        [DataMember(Name = "CapturedDate")]
+        private string CapturedDateField {
+            get {
+                if (this.CapturedDate == null) {
+                    return null;
+                }
+                else {
+                    return this.CapturedDate.Value.ToString(ServiceConstants.DATE_TIME_FORMAT);
+                }
+            }
+            set {
+                if (value == null) {
+                    this.CapturedDate = null;
+                }
+                else {
+                    this.CapturedDate = DateTime.ParseExact(value, ServiceConstants.DATE_TIME_FORMAT, null);
+                }
+            }
+        }
+
+        [IgnoreDataMember]
+        public Nullable<DateTime> CapturedDate { get; set; }
+
+        #endregion
+
+        /// <summary>
+        /// Código de estabelecimento
+        /// </summary>
+        [DataMember]
+        public String EstablishmentCode { get; set; }
     }
 }

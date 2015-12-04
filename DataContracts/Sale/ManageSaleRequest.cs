@@ -13,7 +13,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Coleções de transdações de cartão de crédito
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Collection<ManageCreditCardTransaction> CreditCardTransactionCollection { get; set; }
 
         /// <summary>

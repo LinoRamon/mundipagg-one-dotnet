@@ -10,15 +10,27 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Total de dias para expirar o boleto
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Nullable<int> DaysToAddInBoletoExpirationDate { get; set; }
+
+        /// <summary>
+        /// Url para notificação da transação
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
+        public string NotificationUrl { get; set; }
+
+        /// <summary>
+        /// Indica se a transação vai precisar ser notificada
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
+        public Nullable<bool> IsNotificationEnabled { get; set; }
 
         #region CurrencyIso
 
         /// <summary>
         /// Moeda. Opções: BRL, EUR, USD, ARS, BOB, CLP, COP, UYU, MXN, PYG
         /// </summary>
-        [DataMember(Name = "CurrencyIso")]
+        [DataMember(Name = "CurrencyIso", EmitDefaultValue = false)]
         private string CurrencyIsoField {
             get {
                 if (this.CurrencyIso == null) { return null; }

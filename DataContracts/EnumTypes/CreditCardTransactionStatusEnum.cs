@@ -147,6 +147,12 @@ namespace GatewayApiClient.DataContracts.EnumTypes {
         PendingAuthorize = 24,
 
         /// <summary>
+        /// Transação aguardando cancelamento
+        /// </summary>
+        [EnumMember]
+        WaitingCancellation = 25,
+
+        /// <summary>
         /// Com erro
         /// </summary>
         [EnumMember]

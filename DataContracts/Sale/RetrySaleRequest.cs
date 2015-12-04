@@ -19,13 +19,13 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Opções da transação.
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public RetrySaleOptions Options { get; set; }
 
         /// <summary>
         /// Lista de trasanções de cartão de crédito a serem retentadas
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Collection<RetrySaleCreditCardTransaction> RetrySaleCreditCardTransactionCollection { get; set; }
     }
 }

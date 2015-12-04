@@ -102,9 +102,10 @@
     <Compile Include="DataContracts\Person\Buyer.cs" />
     <Compile Include="DataContracts\Person\Person.cs" />
     <Compile Include="DataContracts\Recurrency\Recurrency.cs" />
-    <Compile Include="DataContracts\SaleOptions.cs" />
+    <Compile Include="DataContracts\Sale\SaleOptions.cs" />
     <Compile Include="DataContracts\Sale\CreateSaleRequest.cs" />
     <Compile Include="DataContracts\Sale\CreateSaleResponse.cs" />
+    <Compile Include="DataContracts\Sale\GenericData.cs" />
     <Compile Include="DataContracts\Sale\ManageSaleRequest.cs" />
     <Compile Include="DataContracts\Sale\ManageSaleResponse.cs" />
     <Compile Include="DataContracts\Sale\QuerySaleResponse.cs" />

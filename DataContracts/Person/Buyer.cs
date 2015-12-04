@@ -14,19 +14,19 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Chave do comprador. Utilizada para identificar um comprador no gateway
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Guid BuyerKey { get; set; }
 
         /// <summary>
         /// Referência do comprador no sistema da loja
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string BuyerReference { get; set; }
 
         /// <summary>
         /// Lista de endereços do comprador
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Collection<BuyerAddress> AddressCollection { get; set; }
 
         #region CreateDateInMerchant
@@ -34,7 +34,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data de criação do comprador no sistema da loja
         /// </summary>
-        [DataMember(Name = "CreateDateInMerchant")]
+        [DataMember(Name = "CreateDateInMerchant", EmitDefaultValue = false)]
         private string CreateDateInMerchantField {
             get {
                 if (this.CreateDateInMerchant == null) { return null; }
@@ -62,7 +62,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data da última atualização do cadastro do comprador no sistema da loja
         /// </summary>
-        [DataMember(Name = "LastBuyerUpdateInMerchant")]
+        [DataMember(Name = "LastBuyerUpdateInMerchant", EmitDefaultValue = false)]
         private string LastBuyerUpdateInMerchantField {
             get {
                 if (this.LastBuyerUpdateInMerchant == null) { return null; }
@@ -90,7 +90,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Categoria do comprador
         /// </summary>
-        [DataMember(Name = "BuyerCategory")]
+        [DataMember(Name = "BuyerCategory", EmitDefaultValue = false)]
         private string BuyerCategoryField {
             get {
                 if (this.BuyerCategory == null) { return null; }
@@ -105,7 +105,7 @@ namespace GatewayApiClient.DataContracts {
                 }
             }
         }
-        
+
         /// <summary>
         /// Categoria do comprador
         /// </summary>

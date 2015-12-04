@@ -72,20 +72,26 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Sexo da pessoa
         /// </summary>
-        [DataMember(Name = "Gender")]
+        [DataMember(Name = "Gender", EmitDefaultValue = false)]
         private string GenderField {
             get {
+                if (this.Gender == null) { return null; }
                 return Gender.ToString();
             }
             set {
-                this.Gender = (GenderEnum)Enum.Parse(typeof(GenderEnum), value);
+                if (value == null) {
+                    this.Gender = null;
+                }
+                else {
+                    this.Gender = (GenderEnum)Enum.Parse(typeof(GenderEnum), value);
+                }
             }
         }
 
         /// <summary>
         /// Sexo da pessoa
         /// </summary>
-        public GenderEnum Gender { get; set; }
+        public Nullable<GenderEnum> Gender { get; set; }
 
         #endregion
 
@@ -94,7 +100,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data de nascimento
         /// </summary>
-        [DataMember(Name = "Birthdate")]
+        [DataMember(Name = "Birthdate", EmitDefaultValue = false)]
         private string BirthdateField {
             get {
                 if (this.Birthdate == null) { return null; }
@@ -148,31 +154,31 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Código identificador do cadsastro do Facebook
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string FacebookId { get; set; }
 
         /// <summary>
         /// Código identificador do cadastro do Twitter
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string TwitterId { get; set; }
 
         /// <summary>
         /// Telefone celular
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string MobilePhone { get; set; }
 
         /// <summary>
         /// Telefone residencial
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string HomePhone { get; set; }
 
         /// <summary>
         /// Telefone comercial
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string WorkPhone { get; set; }
     }
 }

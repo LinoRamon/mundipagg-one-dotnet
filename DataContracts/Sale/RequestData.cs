@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using GatewayApiClient.DataContracts.EnumTypes;
 
@@ -13,27 +14,33 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Identificador da origen do venda na loja
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string Origin { get; set; }
 
         /// <summary>
         /// Identificador da sessão do usuário no sistema da loja (utilizado pelo serviço de anti fraude)
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string SessionId { get; set; }
 
         /// <summary>
         /// Endereço IP do cliente da loja
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string IpAddress { get; set; }
+
+        /// <summary>
+        /// Coleção dos itens genericos do pedido
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
+        public Collection<GenericData> GenericDataCollection { get; set; }
 
         #region EcommerceCategory
 
         /// <summary>
         /// Categoria da venda e-commerce. B2B ou B2C
         /// </summary>
-        [DataMember(Name = "EcommerceCategory")]
+        [DataMember(Name = "EcommerceCategory", EmitDefaultValue = false)]
         private string EcommerceCategoryField {
             get {
                 if (this.EcommerceCategory == null) { return null; }

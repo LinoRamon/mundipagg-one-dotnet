@@ -19,13 +19,13 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Opções da transação.
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public CreditCardTransactionOptions Options { get; set; }
 
         /// <summary>
         /// Dados de recorrência
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Recurrency Recurrency { get; set; }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Operação. Opções: Undefined, AuthOnly, AuthAndCapture, AuthAndCaptureWithDelay
         /// </summary>
-        [DataMember(Name = "CreditCardOperation")]
+        [DataMember(Name = "CreditCardOperation", EmitDefaultValue = false)]
         private string CreditCardOperationField {
             get {
                 if (this.CreditCardOperation == null) { return null; }
@@ -69,7 +69,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Referência da transãção no sistema da loja
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string TransactionReference { get; set; }
 
         #region TransactionDateInMerchant
@@ -77,7 +77,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data de criação da transação no sistema da loja
         /// </summary>
-        [DataMember(Name = "TransactionDateInMerchant")]
+        [DataMember(Name = "TransactionDateInMerchant", EmitDefaultValue = false)]
         private string TransactionDateInMerchantField {
             get {
                 if (this.TransactionDateInMerchant == null) { return null; }

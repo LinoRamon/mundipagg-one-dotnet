@@ -11,7 +11,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Identificador da loja na plataforma
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string MerchantReference { get; set; }
     }
 }

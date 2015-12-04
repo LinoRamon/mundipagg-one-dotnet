@@ -43,7 +43,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data da primeira cobrança
         /// </summary>
-        [DataMember(Name = "DateToStartBilling")]
+        [DataMember(Name = "DateToStartBilling", EmitDefaultValue = false)]
         private string DateToStartBillingField {
             get {
                 return this.DateToStartBilling.Value.ToString(ServiceConstants.DATE_TIME_FORMAT);
@@ -68,13 +68,13 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Total de recorrências
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Nullable<int> Recurrences { get; set; }
 
         /// <summary>
         /// Informa se será necessário efetuar o procedimento OneDollarAuth antes de registrar a recorrência
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Nullable<bool> OneDollarAuth { get; set; }
     }
 }

@@ -18,31 +18,31 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Número do banco
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string BankNumber { get; set; }
 
         /// <summary>
         /// Isntruções a serem impressas no boleto
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string Instructions { get; set; }
 
         /// <summary>
         /// Número do documento
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string DocumentNumber { get; set; }
 
         /// <summary>
         /// Identificador da transação no sistema da loja
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string TransactionReference { get; set; }
 
         /// <summary>
         /// Endereço de cobrança
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public BillingAddress BillingAddress { get; set; }
 
         #region TransactionDateInMerchant
@@ -50,7 +50,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data da criação da transação no sistema da loja
         /// </summary>
-        [DataMember(Name = "TransactionDateInMerchant")]
+        [DataMember(Name = "TransactionDateInMerchant", EmitDefaultValue = false)]
         private string TransactionDateInMerchantField {
             get {
                 if (this.TransactionDateInMerchant == null) { return null; }
@@ -76,7 +76,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Opções da transação de boleto.
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public BoletoTransactionOptions Options { get; set; }
     }
 }

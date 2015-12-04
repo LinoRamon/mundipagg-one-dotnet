@@ -21,7 +21,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data estimada para a entrega
         /// </summary>
-        [DataMember(Name = "EstimatedDeliveryDate")]
+        [DataMember(Name = "EstimatedDeliveryDate", EmitDefaultValue = false)]
         private string EstimatedDeliveryDateField {
             get {
                 if (this.EstimatedDeliveryDate == null) { return null; }
@@ -49,7 +49,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data limite para entrega
         /// </summary>
-        [DataMember(Name = "DeliveryDeadline")]
+        [DataMember(Name = "DeliveryDeadline", EmitDefaultValue = false)]
         private string DeliveryDeadlineField {
             get {
                 if (this.DeliveryDeadline == null) { return null; }
@@ -75,13 +75,13 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Transportadora responsável pela entrega
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string ShippingCompany { get; set; }
 
         /// <summary>
         /// Endereço de entrega
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public DeliveryAddress DeliveryAddress { get; set; }
 
         /// <summary>
