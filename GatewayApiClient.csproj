@@ -93,6 +93,8 @@
     <Compile Include="DataContracts\EnumTypes\SeverityCodeEnum.cs" />
     <Compile Include="DataContracts\ErrorItem.cs" />
     <Compile Include="DataContracts\ErrorReport.cs" />
+    <Compile Include="DataContracts\InstantBuy\CreateInstantBuyDataRequest.cs" />
+    <Compile Include="DataContracts\InstantBuy\CreateInstantBuyDataResponse.cs" />
     <Compile Include="DataContracts\InstantBuy\CreditCardData.cs" />
     <Compile Include="DataContracts\InstantBuy\GetInstantBuyDataResponse.cs" />
     <Compile Include="DataContracts\Merchant\Merchant.cs" />

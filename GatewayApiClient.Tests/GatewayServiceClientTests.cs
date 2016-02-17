@@ -93,6 +93,26 @@ namespace GatewayApiClient.Tests {
                     ZipCode = "20270230"
                 }}
         };
+
+        private readonly CreateInstantBuyDataRequest _createInstantBuyDataRequest = new CreateInstantBuyDataRequest {
+            BillingAddress = new BillingAddress {
+                Number = "123",
+                State = "RJ",
+                City = "Rio de Janeiro",
+                Street = "Av. General Justo",
+                ZipCode = "20270230",
+                Country = "Brazil",
+                Complement = "Ao lado do Aeroporto",
+                District = "Centro"
+            },
+            CreditCardBrand = CreditCardBrandEnum.Visa,
+            CreditCardNumber = "4111111111111111",
+            ExpMonth = 12,
+            ExpYear = 2022,
+            HolderName = "Ozzy Osbourne",
+            IsOneDollarAuthEnabled = true,
+            SecurityCode = "123"
+        };
         #endregion
 
 
@@ -387,6 +407,18 @@ namespace GatewayApiClient.Tests {
             HttpResponse<GetInstantBuyDataResponse> httpResponse = serviceClient.CreditCard.GetCreditCardWithBuyerKey(buyerKey);
 
             Assert.AreEqual(HttpStatusCode.OK, httpResponse.HttpStatusCode);
+        }
+
+        [TestMethod]
+        public void ItShouldCreateACreditCard() {
+            // Cria o cliente para retentar a transação.
+            var serviceClient = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
+
+            // Obtém a resposta da criação do cartão
+            var response = serviceClient.CreditCard.CreateCreditCard(this._createInstantBuyDataRequest);
+
+            // Verifica se a resposta foi bem sucedida
+            Assert.IsTrue(response.Response.Success);
         }
 
         [TestMethod]

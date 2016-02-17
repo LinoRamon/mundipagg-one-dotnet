@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using GatewayApiClient.DataContracts;
+using GatewayApiClient.DataContracts.InstantBuy;
 using GatewayApiClient.EnumTypes;
 using GatewayApiClient.ResourceClients.Interfaces;
 using GatewayApiClient.Utility;
@@ -21,14 +22,34 @@ namespace GatewayApiClient.ResourceClients {
             return this.GetCreditCardWithBuyerKey(buyerKey);
         }
 
-        public HttpResponse<GetInstantBuyDataResponse> GetCreditCard(Guid instantBuyKey)
-        {
+        public HttpResponse<GetInstantBuyDataResponse> GetCreditCard(Guid instantBuyKey) {
             return this.GetInstantBuyDataImplementation(instantBuyKey, string.Empty);
         }
 
-        public HttpResponse<GetInstantBuyDataResponse> GetCreditCardWithBuyerKey(Guid buyerKey)
-        {
+        public HttpResponse<GetInstantBuyDataResponse> GetCreditCardWithBuyerKey(Guid buyerKey) {
             return this.GetInstantBuyDataImplementation(buyerKey, "BuyerKey=");
+        }
+
+        public HttpResponse<CreateInstantBuyDataResponse> CreateCreditCard(CreateInstantBuyDataRequest createInstantBuyDataRequest) {
+            HttpVerbEnum httpVerb = HttpVerbEnum.Post;
+
+            NameValueCollection headers = this.GetHeaders();
+            headers.Add("MerchantKey", this.MerchantKey.ToString());
+
+            return
+                this.HttpUtility.SubmitRequest<CreateInstantBuyDataRequest, CreateInstantBuyDataResponse>(createInstantBuyDataRequest,
+                    string.Concat(this.HostUri, this.ResourceName), httpVerb, HttpContentTypeEnum.Json, headers);
+        }
+
+        public HttpResponse<DeleteInstantBuyDataResponse> DeleteCreditCard(Guid instantBuyKey) {
+            string actionName = string.Format("/{0}", instantBuyKey.ToString());
+
+            HttpVerbEnum httpVerb = HttpVerbEnum.Delete;
+
+            NameValueCollection headers = this.GetHeaders();
+            headers.Add("MerchantKey", this.MerchantKey.ToString());
+
+            return this.HttpUtility.SubmitRequest<DeleteInstantBuyDataResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, HttpContentTypeEnum.Json, headers);
         }
 
         private HttpResponse<GetInstantBuyDataResponse> GetInstantBuyDataImplementation(Guid key, string identifierName) {
