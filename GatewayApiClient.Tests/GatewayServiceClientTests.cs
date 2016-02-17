@@ -365,7 +365,7 @@ namespace GatewayApiClient.Tests {
             _createCreditCardSaleRequest.Buyer = buyer;
 
             // Cria o cliente para retentar a transação.
-            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
+            var serviceClient = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
 
             // Cria transação de cartão de crédito para ser retentada
             HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
