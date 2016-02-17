@@ -7,31 +7,9 @@ namespace GatewayApiClient.DataContracts {
 
     [DataContract(Namespace = "")]
     public class GetBuyerData : BaseResponse {
+
+        [DataMember(EmitDefaultValue = false)]
         public Collection<BuyerAddress> AddressCollection { get; set; }
-
-        #region BirthDate
-
-        [DataMember(Name = "BirthDate", EmitDefaultValue = false)]
-        private string BirthDateField
-        {
-            get
-            {
-                if (this.BirthDate == null) { return null; }
-                return this.BirthDate.Value.ToString(ServiceConstants.DATE_TIME_FORMAT);
-            }
-            set
-            {
-                if (value == null) {
-                    this.BirthDate = null;
-                } else {
-                    this.BirthDate = DateTime.ParseExact(value, ServiceConstants.DATE_TIME_FORMAT, null);
-                }
-            }
-        }
-
-        public Nullable<DateTime> BirthDate { get; set; }
-
-        #endregion
 
         #region BuyerCategory
 
@@ -238,14 +216,14 @@ namespace GatewayApiClient.DataContracts {
             get
             {
                 if (this.Birthdate == null) { return null; }
-                return this.Birthdate.Value.ToString(ServiceConstants.DATE_TIME_FORMAT);
+                return this.Birthdate.Value.ToString(ServiceConstants.DATE_FORMAT);
             }
             set
             {
                 if (value == null) {
                     this.Birthdate = null;
                 } else {
-                    this.Birthdate = DateTime.ParseExact(value, ServiceConstants.DATE_TIME_FORMAT, null);
+                    this.Birthdate = DateTime.ParseExact(value, ServiceConstants.DATE_FORMAT, null);
                 }
             }
         }
@@ -253,6 +231,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Data de nascimento
         /// </summary>
+        [IgnoreDataMember]
         public Nullable<DateTime> Birthdate { get; set; }
 
         #endregion
