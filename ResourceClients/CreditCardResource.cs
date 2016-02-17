@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
 using GatewayApiClient.DataContracts;
-using GatewayApiClient.DataContracts.InstantBuy;
 using GatewayApiClient.EnumTypes;
 using GatewayApiClient.ResourceClients.Interfaces;
 using GatewayApiClient.Utility;
@@ -50,6 +49,19 @@ namespace GatewayApiClient.ResourceClients {
             headers.Add("MerchantKey", this.MerchantKey.ToString());
 
             return this.HttpUtility.SubmitRequest<DeleteInstantBuyDataResponse>(string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, HttpContentTypeEnum.Json, headers);
+        }
+
+        public HttpResponse<UpdateInstantBuyDataResponse> UpdateCreditCard(UpdateInstantBuyDataRequest updateInstantBuyDataRequest, Guid instantBuyKey) {
+            string actionName = string.Format("/{0}", instantBuyKey.ToString());
+
+            HttpVerbEnum httpVerb = HttpVerbEnum.Patch;
+
+            NameValueCollection headers = this.GetHeaders();
+            headers.Add("MerchantKey", this.MerchantKey.ToString());
+
+            return
+                this.HttpUtility.SubmitRequest<UpdateInstantBuyDataRequest, UpdateInstantBuyDataResponse>(updateInstantBuyDataRequest,
+                    string.Concat(this.HostUri, this.ResourceName, actionName), httpVerb, HttpContentTypeEnum.Json, headers);
         }
 
         private HttpResponse<GetInstantBuyDataResponse> GetInstantBuyDataImplementation(Guid key, string identifierName) {

@@ -1,7 +1,6 @@
 ﻿using GatewayApiClient.DataContracts;
 using GatewayApiClient.Utility;
 using System;
-using GatewayApiClient.DataContracts.InstantBuy;
 
 namespace GatewayApiClient.ResourceClients.Interfaces {
 
@@ -19,5 +18,8 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
             CreateInstantBuyDataRequest createInstantBuyDataRequest);
 
         HttpResponse<DeleteInstantBuyDataResponse> DeleteCreditCard(Guid instantBuyKey);
+
+        HttpResponse<UpdateInstantBuyDataResponse> UpdateCreditCard(
+            UpdateInstantBuyDataRequest updateInstantBuyDataRequest, Guid instantBuyKey);
     }
 }

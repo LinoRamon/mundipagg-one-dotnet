@@ -436,6 +436,26 @@ namespace GatewayApiClient.Tests {
         }
 
         [TestMethod]
+        public void ItShouldUpdateCreditCard() {
+            // Cria o cliente para retentar a transação.
+            var serviceClient = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
+
+            // Obtém o instantbuykey para atualizar o cartão
+            Guid instantBuyKey = serviceClient.CreditCard.CreateCreditCard(this._createInstantBuyDataRequest).Response.InstantBuyKey;
+
+            // Cria um buyer para usar o buyerkey e atualizar o cartão
+            UpdateInstantBuyDataRequest updateInstantBuyDataRequest = new UpdateInstantBuyDataRequest {
+                BuyerKey = serviceClient.Buyer.CreateBuyer(this._createBuyer).Response.BuyerKey
+            };
+
+            // Atualiza o cartão
+            var response = serviceClient.CreditCard.UpdateCreditCard(updateInstantBuyDataRequest, instantBuyKey);
+
+            // Varifica se a operação foi bem sucedida
+            Assert.IsTrue(response.Response.Success);
+        }
+
+        [TestMethod]
         public void ItShouldCreateATransactionWithInstantBuyKey() {
             // Cria o cliente para retentar a transação.
             IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();

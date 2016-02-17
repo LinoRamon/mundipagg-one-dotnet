@@ -3,7 +3,7 @@
 namespace GatewayApiClient.DataContracts {
 
     [DataContract(Namespace = "")]
-    public class DeleteInstantBuyDataResponse : BaseResponse {
+    public class UpdateInstantBuyDataResponse : BaseResponse {
 
         /// <summary>
         /// Indicador de sucesso
