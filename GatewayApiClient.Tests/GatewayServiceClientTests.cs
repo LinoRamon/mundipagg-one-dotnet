@@ -60,6 +60,39 @@ namespace GatewayApiClient.Tests {
             AmountInCents = 100,
             Options = new CreditCardTransactionOptions { PaymentMethodCode = 1 }
         };
+
+        private readonly CreateBuyerRequest _createBuyer = new CreateBuyerRequest {
+            Birthdate = new DateTime(1994, 9, 26, 10, 35, 12),
+            BuyerCategory = BuyerCategoryEnum.Normal,
+            BuyerReference = "DotNet Buyer",
+            CreateDateInMerchant = DateTime.UtcNow.AddDays(-5),
+            DocumentNumber = "12345678901",
+            DocumentType = DocumentTypeEnum.CPF,
+            Email = "dotnet@developer.com",
+            EmailType = EmailTypeEnum.Personal,
+            FacebookId = "developer.net",
+            Gender = GenderEnum.M,
+            HomePhone = "2125247689",
+            IpAddress = "192.168.0.1",
+            LastBuyerUpdateInMerchant = DateTime.UtcNow.AddDays(-2),
+            MobilePhone = "21989685642",
+            Name = "Dotnet Developer",
+            PersonType = PersonTypeEnum.Person,
+            TwitterId = "@developer.net",
+            WorkPhone = "21965647826",
+            AddressCollection = new Collection<BuyerAddress> { new BuyerAddress
+                {
+                    AddressType = AddressTypeEnum.Residential,
+                    City = "Rio de Janeiro",
+                    Complement = "Aeroporto",
+                    Country = "Brazil",
+                    District = "Centro",
+                    Number = "123",
+                    State = "RJ",
+                    Street = "Av. General Justo",
+                    ZipCode = "20270230"
+                }}
+        };
         #endregion
 
 
@@ -344,41 +377,18 @@ namespace GatewayApiClient.Tests {
 
         [TestMethod]
         public void ItShouldCreateBuyer() {
-            CreateBuyerRequest createBuyer = new CreateBuyerRequest {
-                Birthdate = DateTime.ParseExact("1994-09-26", "yyyy-MM-dd", null),
-                BuyerCategory = BuyerCategoryEnum.Normal,
-                BuyerReference = "DotNet Buyer",
-                CreateDateInMerchant = DateTime.UtcNow.AddDays(-5),
-                DocumentNumber = "12345678901",
-                DocumentType = DocumentTypeEnum.CPF,
-                Email = "dotnet@developer.com",
-                EmailType = EmailTypeEnum.Personal,
-                FacebookId = "developer.net",
-                Gender = GenderEnum.M,
-                HomePhone = "2125247689",
-                IpAddress = "192.168.0.1",
-                LastBuyerUpdateInMerchant = DateTime.UtcNow.AddDays(-2),
-                MobilePhone = "21989685642",
-                Name = "Dotnet Developer",
-                PersonType = PersonTypeEnum.Person,
-                TwitterId = "@developer.net",
-                WorkPhone = "21965647826",
-                AddressCollection = new Collection<BuyerAddress> { new BuyerAddress
-                {
-                    AddressType = AddressTypeEnum.Residential,
-                    City = "Rio de Janeiro",
-                    Complement = "Aeroporto",
-                    Country = "Brazil",
-                    District = "Centro",
-                    Number = "123",
-                    State = "RJ",
-                    Street = "Av. General Justo",
-                    ZipCode = "20270230"
-                }}
-            };
-
             var client = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
-            var response = client.Buyer.CreateBuyer(createBuyer);
+            var response = client.Buyer.CreateBuyer(this._createBuyer);
+
+            Assert.IsTrue(response.Response.Success);
+        }
+
+        [TestMethod]
+        public void ItShouldGetBuyer() {
+            var client = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
+            Guid buyerKey = client.Buyer.CreateBuyer(this._createBuyer).Response.BuyerKey;
+
+            var response = client.Buyer.GetBuyer(buyerKey);
 
             Assert.IsTrue(response.Response.Success);
         }
