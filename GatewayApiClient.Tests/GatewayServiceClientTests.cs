@@ -422,6 +422,20 @@ namespace GatewayApiClient.Tests {
         }
 
         [TestMethod]
+        public void ItShouldDeleteCreditCard() {
+            // Cria o cliente para retentar a transação.
+            var serviceClient = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
+
+            // Obtém o instantbuykey para deletar o cartão
+            Guid instantBuyKey = serviceClient.CreditCard.CreateCreditCard(this._createInstantBuyDataRequest).Response.InstantBuyKey;
+
+            var response = serviceClient.CreditCard.DeleteCreditCard(instantBuyKey);
+
+            // Verifica se a resposta foi bem sucedida
+            Assert.IsTrue(response.Response.Success);
+        }
+
+        [TestMethod]
         public void ItShouldCreateATransactionWithInstantBuyKey() {
             // Cria o cliente para retentar a transação.
             IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();

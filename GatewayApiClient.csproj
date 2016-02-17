@@ -96,6 +96,7 @@
     <Compile Include="DataContracts\InstantBuy\CreateInstantBuyDataRequest.cs" />
     <Compile Include="DataContracts\InstantBuy\CreateInstantBuyDataResponse.cs" />
     <Compile Include="DataContracts\InstantBuy\CreditCardData.cs" />
+    <Compile Include="DataContracts\InstantBuy\DeleteInstantBuyDataResponse.cs" />
     <Compile Include="DataContracts\InstantBuy\GetInstantBuyDataResponse.cs" />
     <Compile Include="DataContracts\Merchant\Merchant.cs" />
     <Compile Include="DataContracts\Order\Order.cs" />
