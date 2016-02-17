@@ -11,19 +11,29 @@ namespace GatewayApiClient.ResourceClients {
 
         public CreditCardResource(Guid merchantKey, Uri hostUri, NameValueCollection customHeaders) : base(merchantKey, "/CreditCard", hostUri, customHeaders) { }
 
+        [Obsolete("GetInstantBuyData(Guid instantBuyKey) is deprecated, please use GetCreditCard(Guid instantBuyKey) instead.")]
         public HttpResponse<GetInstantBuyDataResponse> GetInstantBuyData(Guid instantBuyKey) {
+            return this.GetCreditCard(instantBuyKey);
+        }
+
+        [Obsolete("GetInstantBuyDataWithBuyerKey(Guid buyerKey) is deprecated, please use GetCreditCardWithBuyerKey(Guid buyerKey) instead.")]
+        public HttpResponse<GetInstantBuyDataResponse> GetInstantBuyDataWithBuyerKey(Guid buyerKey) {
+            return this.GetCreditCardWithBuyerKey(buyerKey);
+        }
+
+        public HttpResponse<GetInstantBuyDataResponse> GetCreditCard(Guid instantBuyKey)
+        {
             return this.GetInstantBuyDataImplementation(instantBuyKey, string.Empty);
         }
 
-        public HttpResponse<GetInstantBuyDataResponse> GetInstantBuyDataWithBuyerKey(Guid buyerKey) {
-            return this.GetInstantBuyDataImplementation(buyerKey, "BuyerKey");
+        public HttpResponse<GetInstantBuyDataResponse> GetCreditCardWithBuyerKey(Guid buyerKey)
+        {
+            return this.GetInstantBuyDataImplementation(buyerKey, "BuyerKey=");
         }
 
         private HttpResponse<GetInstantBuyDataResponse> GetInstantBuyDataImplementation(Guid key, string identifierName) {
 
-            if (string.IsNullOrWhiteSpace(identifierName) == false) { identifierName = string.Concat("/", identifierName); }
-
-            string actionName = string.Format("/{0}{1}", key.ToString(), identifierName);
+            string actionName = string.Format("/{0}{1}", identifierName, key.ToString());
 
             HttpVerbEnum httpVerb = HttpVerbEnum.Get;
 

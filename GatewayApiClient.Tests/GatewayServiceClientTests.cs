@@ -313,6 +313,24 @@ namespace GatewayApiClient.Tests {
         }
 
         [TestMethod]
+        public void ItShouldConsultCreditCardWithInstantBuyKey() {
+            // Cria o cliente para retentar a transação.
+            var serviceClient = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
+
+            // Cria transação de cartão de crédito para ser retentada
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
+
+            Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
+
+            var instantBuyKey = saleResponse.Response.CreditCardTransactionResultCollection.Select(x => x.CreditCard.InstantBuyKey);
+
+            // Obtém os dados do cartão de crédito no gateway.
+            HttpResponse<GetInstantBuyDataResponse> httpResponse = serviceClient.CreditCard.GetCreditCard(instantBuyKey.FirstOrDefault());
+
+            Assert.AreEqual(HttpStatusCode.OK, httpResponse.HttpStatusCode);
+        }
+
+        [TestMethod]
         public void ItShouldConsultWithBuyerKey() {
 
             Buyer buyer = new Buyer {
@@ -338,6 +356,35 @@ namespace GatewayApiClient.Tests {
 
             // Obtém os dados do cartão de crédito no gateway.
             HttpResponse<GetInstantBuyDataResponse> httpResponse = serviceClient.CreditCard.GetInstantBuyDataWithBuyerKey(buyerKey);
+
+            Assert.AreEqual(HttpStatusCode.OK, httpResponse.HttpStatusCode);
+        }
+
+        [TestMethod]
+        public void ItShouldConsultCreditCardWithBuyerKey() {
+            Buyer buyer = new Buyer {
+                Name = "Anakin Skywalker",
+                Birthdate = new DateTime(1994, 9, 26),
+                DocumentNumber = "12345678901",
+                DocumentType = DocumentTypeEnum.CPF,
+                PersonType = PersonTypeEnum.Person,
+                Gender = GenderEnum.M
+            };
+
+            _createCreditCardSaleRequest.Buyer = buyer;
+
+            // Cria o cliente para retentar a transação.
+            var serviceClient = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
+
+            // Cria transação de cartão de crédito para ser retentada
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
+
+            Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
+
+            var buyerKey = saleResponse.Response.BuyerKey;
+
+            // Obtém os dados do cartão de crédito no gateway.
+            HttpResponse<GetInstantBuyDataResponse> httpResponse = serviceClient.CreditCard.GetCreditCardWithBuyerKey(buyerKey);
 
             Assert.AreEqual(HttpStatusCode.OK, httpResponse.HttpStatusCode);
         }
@@ -377,19 +424,28 @@ namespace GatewayApiClient.Tests {
 
         [TestMethod]
         public void ItShouldCreateBuyer() {
+            // Cria o cliente para criar um buyer
             var client = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
+
+            // Faz a chamada do método
             var response = client.Buyer.CreateBuyer(this._createBuyer);
 
+            // Verifica se recebeu a resposta com sucesso
             Assert.IsTrue(response.Response.Success);
         }
 
         [TestMethod]
         public void ItShouldGetBuyer() {
+            // Cria o cliente para buscar um buyer
             var client = new GatewayServiceClient(Guid.Parse("8A2DD57F-1ED9-4153-B4CE-69683EFADAD5"), new Uri("https://stagingv2.mundipaggone.com"));
+
+            // Cria um buyer e pega sua chave
             Guid buyerKey = client.Buyer.CreateBuyer(this._createBuyer).Response.BuyerKey;
 
+            // Faz a chamada do método de buscar o buyer
             var response = client.Buyer.GetBuyer(buyerKey);
 
+            // Verifica se recebeu a resposta com sucesso
             Assert.IsTrue(response.Response.Success);
         }
 

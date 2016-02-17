@@ -9,5 +9,9 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         HttpResponse<GetInstantBuyDataResponse> GetInstantBuyData(Guid instantBuyKey);
 
         HttpResponse<GetInstantBuyDataResponse> GetInstantBuyDataWithBuyerKey(Guid buyerKey);
+
+        HttpResponse<GetInstantBuyDataResponse> GetCreditCard(Guid instantBuyKey);
+
+        HttpResponse<GetInstantBuyDataResponse> GetCreditCardWithBuyerKey(Guid buyerKey);
     }
 }
