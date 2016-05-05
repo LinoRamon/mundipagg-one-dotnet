@@ -18,6 +18,12 @@ namespace GatewayApiClient.DataContracts {
         public Guid BuyerKey { get; set; }
 
         /// <summary>
+        /// Chave do comprador no MundiAccount
+        /// </summary>
+        [DataMember]
+        public Guid AccountKey { get; set; }
+
+        /// <summary>
         /// Referência do comprador no sistema da loja
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
