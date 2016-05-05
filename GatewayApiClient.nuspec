@@ -10,6 +10,7 @@
     <description>MundiPagg Gateway Client</description>
     <releaseNotes>
 Adds MundiAccount fields in CreateSale request.
+Adds CaptureNotAllowed status in CreditCardTransactionStatusEnum.
     </releaseNotes>
     <copyright>MundiPagg 2016</copyright>
     <tags>MundiPagg Credit Card Payment Boleto Gateway Transaction</tags>

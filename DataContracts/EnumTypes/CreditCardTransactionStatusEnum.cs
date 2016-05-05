@@ -153,6 +153,12 @@ namespace GatewayApiClient.DataContracts.EnumTypes {
         WaitingCancellation = 25,
 
         /// <summary>
+        /// Número limite de capturas excedido.
+        /// </summary>
+        [EnumMember]
+        CaptureNotAllowed = 26,
+
+        /// <summary>
         /// Com erro
         /// </summary>
         [EnumMember]
