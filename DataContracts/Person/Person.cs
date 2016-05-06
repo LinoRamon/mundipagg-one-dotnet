@@ -14,7 +14,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Nome da pessoa
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string Name { get; set; }
 
         #region PersonType
@@ -22,9 +22,10 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Define se é pessoa física ou jurídica
         /// </summary>
-        [DataMember(Name = "PersonType")]
+        [DataMember(Name = "PersonType", EmitDefaultValue = false)]
         private string PersonTypeField {
             get {
+                if (this.PersonType == default(PersonTypeEnum)) { return null; }
                 return this.PersonType.ToString();
             }
             set {
@@ -42,7 +43,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Número do documento
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string DocumentNumber { get; set; }
 
         #region DocumentType
@@ -50,9 +51,10 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Tipo de documento
         /// </summary>
-        [DataMember(Name = "DocumentType")]
+        [DataMember(Name = "DocumentType", EmitDefaultValue = false)]
         private string DocumentTypeField {
             get {
+                if (this.DocumentType == default(DocumentTypeEnum)) { return null; }
                 return this.DocumentType.ToString();
             }
             set {
@@ -126,7 +128,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// E-mail
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string Email { get; set; }
 
         #region EmailType
@@ -134,9 +136,10 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Tipo de e-mail. Pessoal ou comercial
         /// </summary>
-        [DataMember(Name = "EmailType")]
+        [DataMember(Name = "EmailType", EmitDefaultValue = false)]
         private string EmailTypeField {
             get {
+                if (this.EmailType == default(EmailTypeEnum)) { return null; }
                 return this.EmailType.ToString();
             }
             set {

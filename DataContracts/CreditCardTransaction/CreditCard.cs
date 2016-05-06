@@ -16,7 +16,7 @@ namespace GatewayApiClient.DataContracts {
         /// <summary>
         /// Chave do cartão do MundiAccount
         /// </summary>
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Guid AccountCreditCardKey { get; set; }
 
         /// <summary>
