@@ -2,16 +2,13 @@
 <package >
   <metadata>
     <id>MundiPagg.Gateway.Client</id>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <authors>MundiPagg</authors>
     <owners>MundiPagg</owners>
     <projectUrl>https://github.com/mundipagg/mundipagg-one-dotnet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MundiPagg Gateway Client</description>
-    <releaseNotes>
-Adds MundiAccount fields in CreateSale request.
-Adds CaptureNotAllowed status in CreditCardTransactionStatusEnum.
-    </releaseNotes>
+    <releaseNotes>Changes request fields to not be serialized when values are default.</releaseNotes>
     <copyright>MundiPagg 2016</copyright>
     <tags>MundiPagg Credit Card Payment Boleto Gateway Transaction</tags>
   </metadata>
