@@ -21,5 +21,11 @@ namespace GatewayApiClient {
         /// Recurso de venda
         /// </summary>
         ISaleResource Sale { get; }
+
+        /// <summary>
+        /// Recurso de Token
+        /// </summary>
+        ITokenResource Token { get; }
+
     }
 }
