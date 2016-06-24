@@ -9,6 +9,7 @@ namespace GatewayApiClient.DataContracts.Token {
     /// <summary>
     /// Contrato de criação de um Token
     /// </summary>
+    [DataContract(Name = "TokenRequest", Namespace = "")]
     public class TokenRequest {
 
         /// <summary>
