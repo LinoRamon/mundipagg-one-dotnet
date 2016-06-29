@@ -18,7 +18,7 @@ namespace GatewayApiClient.DataContracts.Token {
         /// Chave do Token
         /// </summary>
         [DataMember(Name = "TokenKey")]
-        public string TokenKeyField {
+        private string TokenKeyField {
             get {
                 //Verifica se a chave de token não é nula
                 if (this.TokenKey != null) {
@@ -44,39 +44,6 @@ namespace GatewayApiClient.DataContracts.Token {
         /// </summary>
         [IgnoreDataMember]
         public Nullable<Guid> TokenKey { get; set; }
-        #endregion
-
-        #region OrderKey
-        /// <summary>
-        /// Chave do Pedido
-        /// </summary>
-        [DataMember(Name = "OrderKey")]
-        public string OrderKeyField {
-            get {
-                //Verifica se a chave do pedido não é nula
-                if (this.OrderKey != null) {
-                    //Retorna a chave do pedido
-                    return this.OrderKey.ToString();
-                }
-                else {
-                    return null;
-                }
-            }
-            set {
-                //Tenta efetuar o parse:
-                Guid orderKey;
-                if (Guid.TryParse(value, out orderKey) == true) {
-                    this.OrderKey = orderKey;
-                }
-            }
-
-        }
-
-        /// <summary>
-        /// Chave do Pedido
-        /// </summary>
-        [IgnoreDataMember]
-        public Nullable<Guid> OrderKey { get; set; }
         #endregion
 
         /// <summary>
@@ -108,12 +75,6 @@ namespace GatewayApiClient.DataContracts.Token {
 
         [DataMember]
         public Nullable<long> InternalTime { get; set; }
-
-        [IgnoreDataMember]
-        public string Version { get; set; }
-
-        [IgnoreDataMember]
-        public HttpStatusCode HttpStatusCode { get; set; }
 
     }
 }
