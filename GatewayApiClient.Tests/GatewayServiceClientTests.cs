@@ -7,6 +7,7 @@ using GatewayApiClient.DataContracts.EnumTypes;
 using GatewayApiClient.EnumTypes;
 using GatewayApiClient.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GatewayApiClient.DataContracts.Token;
 
 namespace GatewayApiClient.Tests {
     [TestClass]
@@ -512,6 +513,60 @@ namespace GatewayApiClient.Tests {
 
             // Verifica se recebeu a resposta com sucesso
             Assert.IsTrue(response.Response.Success);
+        }
+
+        [TestMethod]
+        public void ItShouldCreateBoletoToken() {
+
+            TokenRequest tokenRequest = new TokenRequest() {
+                Boleto = new TokenBoleto() {
+                    BankNumber = "341",
+                    DaysToAddInBoletoExpirationDate = 5,
+                    DocumentNumber = "12345",
+                    Instructions = "Instructions"
+                },
+                Order = new TokenOrder() {
+                    AmountInCents = 100,
+                    OrderReference = Guid.NewGuid().ToString("N").Substring(0, 20)
+                },
+                Options = new TokenOptions() {
+                    IsAntiFraudEnabled = false,
+                    IsBoletoPaymentEnabled = true,
+                    IsCreditCardPaymentEnabled = false
+                }
+            };
+
+            // Cria o cliente para buscar um buyer
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
+
+            var response = serviceClient.Token.Create(tokenRequest);
+
+            Assert.IsTrue(response.Response.Success);
+        }
+
+        [TestMethod]
+        public void ItShouldCreateCreditCardToken() {
+            TokenRequest tokenRequest = new TokenRequest() {
+                Order = new TokenOrder() {
+                    AmountInCents = 100,
+                    OrderReference = Guid.NewGuid().ToString("N").Substring(0, 20)
+                },
+                CreditCard = new TokenCreditCard() {
+                    PaymentMethodCode = 1
+                },
+                Options = new TokenOptions() {
+                    IsCreditCardPaymentEnabled = true,
+                    IsBoletoPaymentEnabled = false,
+                    IsAntiFraudEnabled = false
+                }
+            };
+
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
+
+            var response = serviceClient.Token.Create(tokenRequest);
+
+            Assert.IsTrue(response.Response.Success);
+
         }
 
         private IGatewayServiceClient GetGatewayServiceClient() {
