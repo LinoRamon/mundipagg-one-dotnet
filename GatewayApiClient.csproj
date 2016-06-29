@@ -126,6 +126,15 @@
     <Compile Include="DataContracts\ServiceConstants.cs" />
     <Compile Include="DataContracts\ShoppingCart\ShoppingCart.cs" />
     <Compile Include="DataContracts\ShoppingCart\ShoppingCartItem.cs" />
+    <Compile Include="DataContracts\Token\TokenRequest.cs" />
+    <Compile Include="DataContracts\Token\TokenRequestData\TokenBoleto.cs" />
+    <Compile Include="DataContracts\Token\TokenRequestData\TokenCreditCard.cs" />
+    <Compile Include="DataContracts\Token\TokenRequestData\TokenCreditCardInstallmentPlan.cs" />
+    <Compile Include="DataContracts\Token\TokenRequestData\TokenInstallmentPlan.cs" />
+    <Compile Include="DataContracts\Token\TokenRequestData\TokenOptions.cs" />
+    <Compile Include="DataContracts\Token\TokenRequestData\TokenOrder.cs" />
+    <Compile Include="DataContracts\Token\TokenRequestData\TokenRequestData.cs" />
+    <Compile Include="DataContracts\Token\TokenResponse.cs" />
     <Compile Include="EnumTypes\HttpContentTypeEnum.cs" />
     <Compile Include="EnumTypes\ManageOperationEnum.cs" />
     <Compile Include="IGatewayServiceClient.cs" />
@@ -165,7 +174,9 @@
     <Compile Include="ResourceClients\Interfaces\IBuyerResource.cs" />
     <Compile Include="ResourceClients\Interfaces\ICreditCardResource.cs" />
     <Compile Include="ResourceClients\Interfaces\ISaleResource.cs" />
+    <Compile Include="ResourceClients\Interfaces\ITokenResource.cs" />
     <Compile Include="ResourceClients\SaleResource.cs" />
+    <Compile Include="ResourceClients\TokenResource.cs" />
     <Compile Include="Serialization\ISerializer.cs">
       <SubType>Code</SubType>
     </Compile>

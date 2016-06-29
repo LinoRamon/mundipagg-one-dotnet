@@ -30,6 +30,12 @@ namespace GatewayApiClient {
         /// </summary>
         public IBuyerResource Buyer { get { return _buyer; } }
 
+        private ITokenResource _token;
+        /// <summary>
+        /// Recurso de Token
+        /// </summary>
+        public ITokenResource Token { get { return _token; } }
+
         #endregion
 
         public GatewayServiceClient() : this(Guid.Empty, null, null) { }
@@ -40,6 +46,7 @@ namespace GatewayApiClient {
             this._sale = new SaleResource(merchantKey, hostUri, customHeaders);
             this._creditCard = new CreditCardResource(merchantKey, hostUri, customHeaders);
             this._buyer = new BuyerResource(merchantKey, hostUri, customHeaders);
+            this._token = new TokenResource(merchantKey, hostUri, customHeaders);
         }
     }
 }
