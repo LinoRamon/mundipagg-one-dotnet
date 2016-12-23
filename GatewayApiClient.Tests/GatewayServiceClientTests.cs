@@ -14,7 +14,7 @@ namespace GatewayApiClient.Tests {
     public class GatewayServiceClientTests : BaseTests {
 
         #region EndPoint
-        private readonly Uri _endpoint = new Uri("https://sandbox.mundipaggone.com");
+        private readonly Uri _endpoint = new Uri("http://localhost:6540/");
         #endregion
 
         #region Variables
@@ -94,6 +94,31 @@ namespace GatewayApiClient.Tests {
                 }}
         };
 
+        private readonly CreateSaleRequest _createOnlineDebitRequest = new CreateSaleRequest {
+            OnlineDebitTransaction = new OnlineDebitTransaction() {
+                AmountInCents = 213,
+                Bank = BankEnum.Itau
+            },
+            Buyer = new Buyer {
+                DocumentNumber = "12345678901",
+                DocumentType = DocumentTypeEnum.CPF,
+                Email = "dotnet@developer.com",
+                Name = "Dotnet Developer",
+                AddressCollection = new Collection<BuyerAddress> { new BuyerAddress
+                {
+                    AddressType = AddressTypeEnum.Residential,
+                    City = "Rio de Janeiro",
+                    Complement = "Aeroporto",
+                    Country = "Brazil",
+                    District = "Centro",
+                    Number = "123",
+                    State = "RJ",
+                    Street = "Av. General Justo",
+                    ZipCode = "20270230"
+                }}
+            }
+        };
+
         private readonly CreateInstantBuyDataRequest _createInstantBuyDataRequest = new CreateInstantBuyDataRequest {
             BillingAddress = new BillingAddress {
                 Number = "123",
@@ -113,8 +138,7 @@ namespace GatewayApiClient.Tests {
             IsOneDollarAuthEnabled = false,
             SecurityCode = "123"
         };
-        #endregion
-
+        #endregion        
 
         [TestMethod]
         public void ItShouldCreateCreditCardSale() {
@@ -566,6 +590,18 @@ namespace GatewayApiClient.Tests {
             var response = serviceClient.Token.Create(tokenRequest);
 
             Assert.IsTrue(response.Response.Success);
+
+        }
+
+        [TestMethod]
+        public void ItShouldCreateOnlineDebitSale() {
+            // Cria o client que enviará a transação.
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
+
+            // Autoriza a transação de cartão de crédito e recebe a resposta do gateway.
+            HttpResponse<CreateSaleResponse> httpResponse = serviceClient.Sale.Create(this._createOnlineDebitRequest);
+
+            Assert.AreEqual(HttpStatusCode.Created, httpResponse.HttpStatusCode);
 
         }
 

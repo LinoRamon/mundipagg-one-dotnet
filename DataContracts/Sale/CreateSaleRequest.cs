@@ -25,6 +25,13 @@ namespace GatewayApiClient.DataContracts {
         [DataMember(EmitDefaultValue = false)]
         public Collection<BoletoTransaction> BoletoTransactionCollection { get; set; }
 
+
+        /// <summary>
+        /// Transação de Débito 
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
+        public OnlineDebitTransaction OnlineDebitTransaction { get; set; }
+
         /// <summary>
         /// Dados do pedido
         /// </summary>

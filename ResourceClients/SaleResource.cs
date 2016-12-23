@@ -128,7 +128,7 @@ namespace GatewayApiClient.ResourceClients {
         public HttpResponse<CreateSaleResponse> Create(Collection<BoletoTransaction> boletoTransactionCollection) {
 
             return this.Create(boletoTransactionCollection, null);
-        }
+        }        
 
         /// <summary>
         /// Cria uma transação de boleto
