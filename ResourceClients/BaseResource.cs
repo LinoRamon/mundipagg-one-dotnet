@@ -26,7 +26,6 @@ namespace GatewayApiClient.ResourceClients {
             }
 
             this.HttpUtility = new HttpUtility();
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
             this.MerchantKey = merchantKey;
             if (hostUri != null) {
