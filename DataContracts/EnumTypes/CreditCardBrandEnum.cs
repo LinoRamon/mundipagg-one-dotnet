@@ -3,7 +3,7 @@
 namespace GatewayApiClient.DataContracts.EnumTypes {
 
     /// <summary>
-    /// Bandeiras de cartão de crédito
+    /// Bandeiras de cartões
     /// </summary>
     [DataContract]
     public enum CreditCardBrandEnum {
@@ -84,6 +84,78 @@ namespace GatewayApiClient.DataContracts.EnumTypes {
         /// LearderCard
         /// </summary>
         [EnumMember]
-        LeaderCard = 13
+        LeaderCard = 13,
+
+        /// <summary>
+        /// Submarino
+        /// </summary>
+        [EnumMember]
+        Submarino = 14,
+
+        /// <summary>
+        /// SodexoAlimentacao
+        /// </summary>
+        [EnumMember]
+        SodexoAlimentacao = 15,
+
+        /// <summary>
+        /// SodexoRefeicao
+        /// </summary>
+        [EnumMember]
+        SodexoRefeicao = 16,
+
+        /// <summary>
+        /// SodexoPremium
+        /// </summary>
+        [EnumMember]
+        SodexoPremium = 17,
+
+        /// <summary>
+        /// SodexoCombustivel
+        /// </summary>
+        [EnumMember]
+        SodexoCombustivel = 18,
+
+        /// <summary>
+        /// SodexoCultura
+        /// </summary>
+        [EnumMember]
+        SodexoCultura = 19,
+
+        /// <summary>
+        /// SodexoGift
+        /// </summary>
+        [EnumMember]
+        SodexoGift = 20,
+
+        /// <summary>
+        /// JCB
+        /// </summary>
+        [EnumMember]
+        JCB = 21,
+
+        /// <summary>
+        /// Credz
+        /// </summary>
+        [EnumMember]
+        Credz = 22,
+
+        /// <summary>
+        /// Pernambucanas
+        /// </summary>
+        [EnumMember]
+        Pernambucanas = 23,
+
+        /// <summary>
+        /// Paqueta
+        /// </summary>
+        [EnumMember]
+        Paqueta = 24,
+
+        /// <summary>
+        /// Mais
+        /// </summary>
+        [EnumMember]
+        Mais = 25
     }
 }
