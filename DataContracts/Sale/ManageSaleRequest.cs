@@ -21,5 +21,6 @@ namespace GatewayApiClient.DataContracts {
         /// </summary>
         [DataMember]
         public Nullable<Guid> OrderKey { get; set; }
+
     }
 }
