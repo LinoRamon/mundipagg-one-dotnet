@@ -21,5 +21,11 @@ namespace GatewayApiClient.DataContracts {
         /// </summary>
         [DataMember]
         public Nullable<Guid> OrderKey { get; set; }
+
+        /// <summary>
+        /// Chave da requisição.
+        /// </summary>
+        [DataMember]
+        public Guid RequestKey { get; set; }
     }
 }

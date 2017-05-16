@@ -17,6 +17,12 @@ namespace GatewayApiClient.DataContracts {
         public Guid OrderKey { get; set; }
 
         /// <summary>
+        /// Chave da requisição.
+        /// </summary>
+        [DataMember]
+        public Guid RequestKey { get; set; }
+
+        /// <summary>
         /// Opções da transação.
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
