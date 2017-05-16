@@ -13,6 +13,11 @@
         /// <summary>
         /// Cancelamento
         /// </summary>
-        Cancel
+        Cancel,
+
+        /// <summary>
+        /// Autorização
+        /// </summary>
+        Authorize
     }
 }
