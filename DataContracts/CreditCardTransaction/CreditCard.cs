@@ -32,7 +32,7 @@ namespace GatewayApiClient.DataContracts {
         public string HolderName { get; set; }
 
         /// <summary>
-        /// Documento do titular do cartão - CPF ou CNPJ)
+        /// Documento do titular do cartão - CPF ou CNPJ
         /// </summary>
         [DataMember(EmitDefaultValue = false)]
         public string HolderDocumentNumber { get; set; }
