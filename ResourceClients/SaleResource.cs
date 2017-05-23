@@ -165,15 +165,16 @@ namespace GatewayApiClient.ResourceClients {
         }
 
         /// <summary>
-        /// Gerencia uma venda
+        /// Gerencia uma venda 
         /// </summary>
         /// <param name="manageOperation">Operação que deverá ser executada (captura ou cancelamento)</param>
         /// <param name="orderKey">Chave do pedido</param>
         /// <returns></returns>
-        public HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey) {
+        public HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, string orderReference = null) {
 
             ManageSaleRequest manageSaleRequest = new ManageSaleRequest();
             manageSaleRequest.OrderKey = orderKey;
+            manageSaleRequest.OrderReference = orderReference;
 
             return this.Manage(manageOperation, manageSaleRequest);
         }
@@ -186,10 +187,12 @@ namespace GatewayApiClient.ResourceClients {
         /// <param name="orderKey">Chave do pedido</param>
         /// <param name="manageCreditCardTransactionCollection">Coleção de transações que serão gerenciadas</param>
         /// <returns></returns>
-        public HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, Collection<ManageCreditCardTransaction> manageCreditCardTransactionCollection) {
+        public HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, Collection<ManageCreditCardTransaction> manageCreditCardTransactionCollection, string orderReference = null) {
 
             ManageSaleRequest manageSaleRequest = new ManageSaleRequest();
             manageSaleRequest.OrderKey = orderKey;
+            manageSaleRequest.OrderReference = orderReference;
+
             manageSaleRequest.CreditCardTransactionCollection = manageCreditCardTransactionCollection;
 
             return this.Manage(manageOperation, manageSaleRequest);
@@ -202,12 +205,12 @@ namespace GatewayApiClient.ResourceClients {
         /// <param name="orderKey">Chave do pedido</param>
         /// <param name="manageCreditCardTransaction">Dados da transação que será gerenciada</param>
         /// <returns></returns>
-        public HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, ManageCreditCardTransaction manageCreditCardTransaction) {
+        public HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, ManageCreditCardTransaction manageCreditCardTransaction, string orderReference = null) {
 
             Collection<ManageCreditCardTransaction> manageCreditCardTransactionCollection = new Collection<ManageCreditCardTransaction>();
             manageCreditCardTransactionCollection.Add(manageCreditCardTransaction);
 
-            return this.Manage(manageOperation, orderKey, manageCreditCardTransactionCollection);
+            return this.Manage(manageOperation, orderKey, manageCreditCardTransactionCollection, orderReference);
         }
 
         #endregion
