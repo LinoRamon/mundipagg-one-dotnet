@@ -200,6 +200,27 @@ namespace GatewayApiClient.Tests {
         }
 
         [TestMethod]
+        public void ItShouldCaptureATransactionPassingOrderReference()
+        {
+            // Cria o cliente para Capturar a transação.
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
+
+            this._createCreditCardSaleRequest.CreditCardTransactionCollection[0].CreditCardOperation = CreditCardOperationEnum.AuthOnly;
+
+            // Cria transação de cartão de crédito para ser capturada
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
+
+            Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
+
+            Guid orderKey = saleResponse.Response.OrderResult.OrderKey;
+
+            // Captura a transação de cartão de crédito e recebe a resposta do gateway.
+            HttpResponse<ManageSaleResponse> httpResponse = serviceClient.Sale.Manage(ManageOperationEnum.Capture, orderKey, DateTime.Now.ToString("yyyyMMddhhmmss"));            
+
+            Assert.AreEqual(httpResponse.HttpStatusCode, HttpStatusCode.OK);
+        }
+
+        [TestMethod]
         public void ItShouldRetryATransaction() {
             // Cria o cliente para retentar a transação.
             IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
@@ -233,6 +254,34 @@ namespace GatewayApiClient.Tests {
             HttpResponse<QuerySaleResponse> httpResponse = serviceClient.Sale.QueryOrder(orderKey);
 
             Assert.AreEqual(httpResponse.HttpStatusCode, HttpStatusCode.OK);
+        }
+
+        [TestMethod]
+        public void ItShouldDoQueryAfterCapturePassingNewOrderReferenceMethod()
+        { 
+            // Cria o cliente para consultar o pedido.
+            IGatewayServiceClient serviceClient = this.GetGatewayServiceClient();
+
+            this._createCreditCardSaleRequest.CreditCardTransactionCollection[0].CreditCardOperation = CreditCardOperationEnum.AuthOnly;
+
+            // Cria transação de cartão de crédito para ser consultada
+            HttpResponse<CreateSaleResponse> saleResponse = serviceClient.Sale.Create(this._createCreditCardSaleRequest);
+
+            Assert.AreEqual(saleResponse.HttpStatusCode, HttpStatusCode.Created);
+
+            Guid orderKey = saleResponse.Response.OrderResult.OrderKey;
+
+            string orderReference = DateTime.Now.ToString("yyyyMMddhhmmss");
+
+            // Captura a transação de cartão de crédito e recebe a resposta do gateway.
+            HttpResponse<ManageSaleResponse> httpResponse = serviceClient.Sale.Manage(ManageOperationEnum.Capture, orderKey, orderReference);
+
+            // Consulta o pedido no gateway.
+            HttpResponse<QuerySaleResponse> httpResponseQuery = serviceClient.Sale.QueryOrder(orderKey);          
+
+            Assert.AreEqual(httpResponse.HttpStatusCode, HttpStatusCode.OK);
+
+            Assert.AreEqual(orderReference, httpResponseQuery.Response.SaleDataCollection[0].OrderData.OrderReference);
         }
 
         [TestMethod]

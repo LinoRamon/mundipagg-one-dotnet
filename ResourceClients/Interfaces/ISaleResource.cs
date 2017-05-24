@@ -82,7 +82,7 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         #region Manage
 
         /// <summary>
-        /// Gerencia uam venda
+        /// Gerencia uam venda 
         /// </summary>
         /// <param name="manageOperation">Operação que deverá ser executada (captura ou cancelamento)</param>
         /// <param name="manageSaleRequest">Dados da venda</param>
@@ -95,7 +95,7 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         /// <param name="manageOperation">Operação que deverá ser executada (captura ou cancelamento)</param>
         /// <param name="orderKey">Chave do pedido</param>
         /// <returns></returns>
-        HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey);
+        HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, string orderReference = null);
 
         /// <summary>
         /// Gerencia uma coleção de transações de cartão de crédito.
@@ -104,7 +104,7 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         /// <param name="orderKey">Chave do pedido</param>
         /// <param name="manageCreditCardTransactionCollection">Coleção de transações que serão gerenciadas</param>
         /// <returns></returns>
-        HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, Collection<ManageCreditCardTransaction> manageCreditCardTransactionCollection);
+        HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, Collection<ManageCreditCardTransaction> manageCreditCardTransactionCollection, string orderReference = null);
 
         /// <summary>
         /// Gerencia uma transação de cartão de crédito específica
@@ -113,7 +113,7 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         /// <param name="orderKey">Chave do pedido</param>
         /// <param name="manageCreditCardTransaction">Dados da transação que será gerenciada</param>
         /// <returns></returns>
-        HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, ManageCreditCardTransaction manageCreditCardTransaction);
+        HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, Guid orderKey, ManageCreditCardTransaction manageCreditCardTransaction, string orderReference = null);
 
         #endregion
 

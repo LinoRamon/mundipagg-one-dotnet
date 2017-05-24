@@ -22,5 +22,10 @@ namespace GatewayApiClient.DataContracts {
         [DataMember]
         public Nullable<Guid> OrderKey { get; set; }
 
+        /// <summary>
+        /// Número do pedido a ser atualizado na Order. 
+        /// </summary>
+        [DataMember]
+        public string OrderReference { get; internal set; }
     }
 }
