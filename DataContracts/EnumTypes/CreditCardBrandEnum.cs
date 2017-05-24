@@ -113,7 +113,7 @@ namespace GatewayApiClient.DataContracts.EnumTypes {
         /// <summary>
         /// SodexoCombustivel
         /// </summary>
-        [EnumMember]
+       [EnumMember]
         SodexoCombustivel = 18,
 
         /// <summary>
@@ -163,6 +163,5 @@ namespace GatewayApiClient.DataContracts.EnumTypes {
         /// </summary>
         [EnumMember]
         Sodexo = 26
-
-    }
+   }
 }
