@@ -26,6 +26,6 @@ namespace GatewayApiClient.DataContracts {
         /// Número do pedido a ser atualizado na Order. 
         /// </summary>
         [DataMember]
-        public string OrderReference { get; internal set; }
+        public string OrderReference { get; set; }
     }
 }
