@@ -5,6 +5,7 @@ using GatewayApiClient.DataContracts;
 using GatewayApiClient.EnumTypes;
 using GatewayApiClient.ResourceClients.Interfaces;
 using GatewayApiClient.Utility;
+using GatewayApiClient.DataContracts.OnlineDebitTransaction;
 
 namespace GatewayApiClient.ResourceClients {
 
@@ -140,16 +141,42 @@ namespace GatewayApiClient.ResourceClients {
             return this.Create(boletoTransaction, null);
         }
 
+        /// /// <summary>
+        /// Cria uma Transação de débito online
+        /// </summary>
+        /// <param name="onlineDebitTransaction">Transação de débito online</param>
+        /// <returns></returns>
+        public HttpResponse<CreateSaleResponse> Create(OnlineDebitTransaction onlineDebitTransaction, string orderReference) {
+            CreateSaleRequest createSaleRequest = new CreateSaleRequest();
+            createSaleRequest.OnlineDebitTransaction = onlineDebitTransaction;
+            createSaleRequest.Options = new SaleOptions() { IsAntiFraudEnabled = false };
+            if (string.IsNullOrWhiteSpace(orderReference) == false) {
+                createSaleRequest.Order = new Order() {
+                    OrderReference = orderReference
+                };
+            }
+
+            return this.Create(createSaleRequest);
+        }
+        /// /// <summary>
+        /// Cria uma Transação de débito online
+        /// </summary>
+        /// <param name="onlineDebitTransaction">Transação de débito online</param>
+        /// <returns></returns>
+        public HttpResponse<CreateSaleResponse> Create(OnlineDebitTransaction onlineDebitTransaction) {
+            return this.Create(onlineDebitTransaction, null);
+        }
+
         #endregion
 
-        #region Manage
+            #region Manage
 
-        /// <summary>
-        /// Gerencia uam venda
-        /// </summary>
-        /// <param name="manageOperation">Operação que deverá ser executada (captura ou cancelamento)</param>
-        /// <param name="manageSaleRequest">Dados da venda</param>
-        /// <returns></returns>
+            /// <summary>
+            /// Gerencia uam venda
+            /// </summary>
+            /// <param name="manageOperation">Operação que deverá ser executada (captura ou cancelamento)</param>
+            /// <param name="manageSaleRequest">Dados da venda</param>
+            /// <returns></returns>
         public HttpResponse<ManageSaleResponse> Manage(ManageOperationEnum manageOperation, ManageSaleRequest manageSaleRequest) {
 
             // Configura o action que será utilizado
