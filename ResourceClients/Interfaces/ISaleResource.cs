@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using GatewayApiClient.DataContracts;
 using GatewayApiClient.EnumTypes;
 using GatewayApiClient.Utility;
+using GatewayApiClient.DataContracts.OnlineDebitTransaction;
 
 namespace GatewayApiClient.ResourceClients.Interfaces {
 
@@ -76,6 +77,20 @@ namespace GatewayApiClient.ResourceClients.Interfaces {
         /// <param name="boletoTransaction">Dados da transação de boleto</param>
         /// <returns></returns>
         HttpResponse<CreateSaleResponse> Create(BoletoTransaction boletoTransaction);
+
+        /// /// <summary>
+        /// Cria uma Transação de débito online
+        /// </summary>
+        /// <param name="onlineDebitTransaction">Transação de débito online</param>
+        /// <returns></returns>
+        HttpResponse<CreateSaleResponse> Create(OnlineDebitTransaction onlineDebitTransaction, string orderReference);
+
+        /// /// <summary>
+        /// Cria uma Transação de débito online
+        /// </summary>
+        /// <param name="onlineDebitTransaction">Transação de débito online</param>
+        /// <returns></returns>
+        HttpResponse<CreateSaleResponse> Create(OnlineDebitTransaction onlineDebitTransaction);
 
         #endregion
 

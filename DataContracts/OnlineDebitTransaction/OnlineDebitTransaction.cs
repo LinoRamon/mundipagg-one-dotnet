@@ -5,12 +5,15 @@ using System.Runtime.Serialization;
 namespace GatewayApiClient.DataContracts.OnlineDebitTransaction {
     [DataContract(Name = "OnlineDebitTransaction", Namespace = "")]
     public class OnlineDebitTransaction {
+        [IgnoreDataMember]
         public Nullable<BankEnum> Bank { get; set; }
+
         private string _bankField;
         [DataMember(Name = "Bank")]
         private string BankField {
             get {
-                return this._bankField;
+                if(this.Bank == null) { return null; }
+                return this.Bank.ToString();
             }
             set {
                 this._bankField = value;
