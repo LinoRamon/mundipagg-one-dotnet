@@ -29,6 +29,9 @@ namespace GatewayApiClient.DataContracts.OnlineDebitTransaction {
                 }
             }
         }
+        /// <summary>
+        /// Valor da transação.
+        /// </summary>
         [DataMember]
         public long AmountInCents { get; set; }
         [DataMember]
