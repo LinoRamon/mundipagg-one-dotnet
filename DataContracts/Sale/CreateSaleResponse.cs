@@ -23,6 +23,12 @@ namespace GatewayApiClient.DataContracts {
         public Collection<BoletoTransactionResult> BoletoTransactionResultCollection { get; set; }
 
         /// <summary>
+        /// Transação de débito
+        /// </summary>
+        [DataMember]
+        public OnlineDebitTransaction.OnlineDebitTransactionResult OnlineDebitTransactionResult { get; set; }
+
+        /// <summary>
         /// Dados de retorno do pedido
         /// </summary>
         [DataMember]
