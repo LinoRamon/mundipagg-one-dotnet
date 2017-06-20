@@ -8,5 +8,11 @@ namespace GatewayApiClient.DataContracts.OnlineDebitTransaction {
         /// </summary>
         [DataMember]
         public bool IsCashTransaction { get; set; }
+
+        /// <summary>
+        /// Url para notificação da transação
+        /// </summary>
+        [DataMember]
+        public string NotificationUrl { get; set; }
     }
 }
